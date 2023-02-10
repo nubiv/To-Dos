@@ -20,14 +20,14 @@ export class ToDoListComponent {
     public translateService: TranslateService,
     public authService: AuthService,
     public taskAction: TaskActionService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.onShow()
-   }
+    this.onShow();
+  }
 
   onShow() {
-    this.taskAction.GetAllTasks().subscribe(docs => this.taskList = docs);
+    this.taskAction.GetAllTasks().subscribe((docs) => (this.taskList = docs));
   }
 
   onChangeInput(event: Event) {
@@ -39,72 +39,76 @@ export class ToDoListComponent {
 
   onAddTask() {
     if (this.taskContent) {
-    const task = {
-      content: this.taskContent,
-      done: false
-    }
+      const task = {
+        content: this.taskContent,
+        done: false
+      };
 
-    this.taskAction
-    .CreateTask(task)
-    .then((result) => {
-      window.alert('Task added successfully.')
-      this.taskContent = ''
+      this.taskAction
+        .CreateTask(task)
+        .then((result) => {
+          window.alert('Task added successfully.');
+          this.taskContent = '';
 
-      this.taskAction.AddUID(result.id)
-      .catch((error) => {
-        window.alert(error)
-      })
-    })
-    .catch((error) => {
-      window.alert(error)
-    })
+          this.taskAction.AddUID(result.id).catch((error) => {
+            window.alert(error);
+          });
+        })
+        .catch((error) => {
+          window.alert(error);
+        });
     }
   }
 
   onChecked(event: Event) {
     const target = event.target as HTMLInputElement;
     const li = target.parentElement?.parentElement as HTMLLIElement;
-    const taskUid = li.className
+    const taskUid = li.className;
 
     this.taskAction
-    .EditTask(taskUid)
-    .then(() => {
-      window.alert('Task updated.')
-    })
-    .catch((error) => {
-      window.alert(error)
-    })
+      .EditTask(taskUid)
+      .then(() => {
+        window.alert('Task updated.');
+      })
+      .catch((error) => {
+        window.alert(error);
+      });
   }
 
   onDeleteTask(event: Event) {
     const target = event.target as HTMLButtonElement;
     const li = target.parentElement as HTMLLIElement;
-    const taskUid = li.className
+    const taskUid = li.className;
 
     this.taskAction
-    .DeleteTask(taskUid)
-    .then(() => {
-      window.alert('Task deleted.')
-    })
-    .catch((error) => {
-      window.alert(error)
-    })
+      .DeleteTask(taskUid)
+      .then(() => {
+        window.alert('Task deleted.');
+      })
+      .catch((error) => {
+        window.alert(error);
+      });
   }
 
   onSwitchToSP() {
     this.onSpanish = true;
 
     this.taskAction
-    .GetAllTasks()
-    .pipe(
-      map(tasks=> {
-        tasks.map(task=> 
-          this.translateService.translate(task.content).subscribe(result=> task.content=result))
+      .GetAllTasks()
+      .pipe(
+        map((tasks) => {
+          tasks.map((task) =>
+            this.translateService
+              .translate(task.content)
+              .subscribe((result) => (task.content = result))
+          );
 
-        return tasks
-      })
-    )
-    .subscribe(translatedTasks => this.translatedTaskList = translatedTasks)
+          return tasks;
+        })
+      )
+      .subscribe(
+        (translatedTasks) => (this.translatedTaskList = translatedTasks)
+      );
   }
 
   onSwitchToEN() {

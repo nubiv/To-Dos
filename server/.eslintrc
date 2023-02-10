@@ -1,0 +1,9 @@
+{
+  "root": true,
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [],
+  "extends": ["eslint:recommended"]
+}
