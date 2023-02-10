@@ -1,0 +1,27 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+
+    <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+      <mat-card-title>Thank You for Registering</mat-card-title>
+    </mat-card-header>
+
+    <div class="formGroup" *ngIf="authService.userData as user" fxLayout="row" fxLayoutAlign="center center">
+      <mat-card-content class="text-center">We have sent a confirmation email to <strong>{{user.email}}</strong>.</mat-card-content>
+      <mat-card-content class="text-center">Please check your email and click on the link to verfiy your email address.</mat-card-content>
+    </div>
+      
+      <!-- Calling SendVerificationMail() method using authService Api -->
+    <div class="formGroup" fxLayout="row" fxLayoutAlign="center center">
+      <button type="button" class="btn btnPrimary" (click)="authService.SendVerificationMail()">
+        <i class="fas fa-redo-alt"></i>
+        Resend Verification Email
+      </button>
+    </div>
+
+    <div class="redirectToSignUp" fxLayout="row" fxLayoutAlign="center center">
+      <span>Go back to?<span class="redirect" routerLink="/login"> Sign in</span></span>
+    </div>
+
+  </mat-card>
+</div>
+  

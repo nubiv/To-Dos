@@ -1,0 +1,54 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+
+  <mat-card-header *ngIf="authService.userData as user" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card-title>{{user.email}}</mat-card-title>
+  </mat-card-header>
+
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <label>New Task</label>
+    <input 
+      type="text" 
+      (input)="onChangeInput($event)" 
+      [value]="taskContent"
+      placeholder="Enter a new task">
+    <button 
+      (click)="onAddTask()" 
+      [disabled]="!taskContent">Add</button>
+  </div>
+
+  <div class="task-container">
+    <div class="taskList" *ngIf="!onSpanish">
+      <ul  *ngFor = "let task of taskList;">
+        <li [ngClass]="task.uid" fxLayout="row">
+          <span>{{ task.content }}</span>
+            <input type="checkbox" class="example-margin" [(ngModel)]="task.done" (change)="onChecked($event)"> DONE
+          <button (click)="onDeleteTask($event)">Delete</button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="taskList" *ngIf="onSpanish">
+      <ul  *ngFor = "let task of translatedTaskList;">
+        <li [ngClass]="task.uid" fxLayout="row">
+          <span>{{ task.content }}</span>
+            <input type="checkbox" class="checkbox" [(ngModel)]="task.done" (change)="onChecked($event)"> DONE
+          <button (click)="onDeleteTask($event)">Delete</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div *ngIf="!onSpanish" fxLayout="row" fxLayoutAlign="center center">
+    <button (click)="onSwitchToSP()">Translate to Espanol!</button>
+  </div> 
+
+  <div *ngIf="onSpanish" fxLayout="row" fxLayoutAlign="center center">
+    <button (click)="onSwitchToEN()">Back to English!</button>
+  </div> 
+
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <button (click)="authService.SignOut()" fxLayout="row" fxLayoutAlign="center center">Sign out</button>
+  </div> 
+  </mat-card>
+</div>
