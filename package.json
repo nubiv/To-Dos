@@ -1,0 +1,20 @@
+{
+  "name": "to-dos",
+  "version": "1.0.0",
+  "description": "A To-Do List with a translation feature",
+  "main": "index.js",
+  "scripts": {
+    "version": "npx auto-changelog -p && git add CHANGELOG.md",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/horus2121/To-Dos.git"
+  },
+  "author": "horus",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/horus2121/To-Dos/issues"
+  },
+  "homepage": "https://github.com/horus2121/To-Dos#readme"
+}
