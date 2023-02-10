@@ -54,4 +54,4 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   providers: [AuthService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

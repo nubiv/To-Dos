@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./verify-email.component.css']
 })
 export class VerifyEmailComponent implements OnInit {
-  constructor( public authService: AuthService) { }
+  constructor(public authService: AuthService) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

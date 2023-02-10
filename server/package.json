@@ -5,12 +5,15 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx nodemon index.js",
+    "prettier-format": "prettier --config .prettierrc './src/**' --write",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "horus",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "eslint": "^8.33.0",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.8.4"
   },
   "dependencies": {
     "cors": "^2.8.5",

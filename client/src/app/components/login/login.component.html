@@ -1,38 +1,60 @@
-  <div class="login-container" fxLayout="row" fxLayoutAlign="center center">
-    <mat-card class="box">
+<div class="login-container" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+    <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+      <mat-card-title>Log in</mat-card-title>
+    </mat-card-header>
 
-      <mat-card-header fxLayout="row" fxLayoutAlign="center center">
-        <mat-card-title>Log in</mat-card-title>
-      </mat-card-header>
+    <div class="login-form" fxLayout="row" fxLayoutAlign="center center">
+      <mat-card-content>
+        <mat-form-field class="login-form-field">
+          <input
+            matInput
+            type="text"
+            class="formControl"
+            placeholder="Email"
+            #userName
+            required
+          />
+        </mat-form-field>
 
-      <div class="login-form" fxLayout="row" fxLayoutAlign="center center">
-        <mat-card-content>
-          <mat-form-field class="login-form-field">
-            <input matInput type="text" class="formControl" placeholder="Email" #userName required>
-          </mat-form-field>
+        <mat-form-field class="login-form-field">
+          <input
+            matInput
+            type="password"
+            class="formControl"
+            placeholder="Password"
+            #userPassword
+            required
+          />
+        </mat-form-field>
+      </mat-card-content>
+    </div>
 
-          <mat-form-field class="login-form-field">
-            <input matInput type="password" class="formControl" placeholder="Password" #userPassword required>
-          </mat-form-field>
-        </mat-card-content>
-      </div>
+    <!-- Calling SignIn Api from AuthService -->
+    <div class="formGroup" fxLayout="row" fxLayoutAlign="center center">
+      <button
+        class="btn"
+        value="Log in"
+        (click)="authService.SignIn(userName.value, userPassword.value)"
+      >
+        Log in
+      </button>
+    </div>
 
-      <!-- Calling SignIn Api from AuthService -->
-      <div class="formGroup" fxLayout="row" fxLayoutAlign="center center">
-        <button class="btn" value="Log in" (click)="authService.SignIn(userName.value, userPassword.value)">Log in</button>
-      </div>
+    <div class="formGroup" fxLayout="row" fxLayoutAlign="center center">
+      <span class="or"><span class="orInner">Or</span></span>
+    </div>
 
-      <div class="formGroup" fxLayout="row" fxLayoutAlign="center center">
-        <span class="or"><span class="orInner">Or</span></span>
-      </div>
+    <div class="forgotPassword" fxLayout="row" fxLayoutAlign="center center">
+      <span routerLink="/forgot-password">Forgot Password?</span>
+    </div>
 
-      <div class="forgotPassword" fxLayout="row" fxLayoutAlign="center center">
-        <span routerLink="/forgot-password">Forgot Password?</span>
-      </div>
-
-      <div class="redirectToSignUp" fxLayout="row" fxLayoutAlign="center center">
-        <span>Don't have an account?<span class="redirect" routerLink="/register"> Sign Up</span></span>
-      </div>
-
-    </mat-card>
-  </div>
+    <div class="redirectToSignUp" fxLayout="row" fxLayoutAlign="center center">
+      <span
+        >Don't have an account?<span class="redirect" routerLink="/register">
+          Sign Up</span
+        ></span
+      >
+    </div>
+  </mat-card>
+</div>

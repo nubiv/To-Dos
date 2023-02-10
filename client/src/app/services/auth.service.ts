@@ -3,12 +3,12 @@ import { User } from '../services/user';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
-  AngularFirestoreDocument,
+  AngularFirestoreDocument
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
   userData: any; // Save logged in user data
@@ -95,10 +95,10 @@ export class AuthService {
     const userData: User = {
       uid: user.uid,
       email: user.email,
-      emailVerified: user.emailVerified,
+      emailVerified: user.emailVerified
     };
     return userRef.set(userData, {
-      merge: true,
+      merge: true
     });
   }
   // Sign out

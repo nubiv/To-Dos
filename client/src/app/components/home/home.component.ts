@@ -7,12 +7,9 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  constructor(public authService: AuthService) {}
 
-  constructor(
-    public authService: AuthService
-  ) { }
-
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   isLoggedIn() {
     const user = JSON.parse(localStorage.getItem('user')!);
