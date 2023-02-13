@@ -1,20 +1,22 @@
-import { Component } from '@angular/core';
-import { TranslateService } from '../../services/translate.service';
-import { TaskActionService } from 'src/app/services/task-action.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { Task } from 'src/app/services/task';
-import { map } from 'rxjs/operators';
+import { Component } from "@angular/core";
+import { TranslateService } from "../../services/translate.service";
+import { TaskActionService } from "src/app/services/task-action.service";
+import { AuthService } from "src/app/services/auth.service";
+import { Task } from "src/app/services/task";
+import { map } from "rxjs/operators";
 
 @Component({
-  selector: 'app-to-do-list',
-  templateUrl: './to-do-list.component.html',
-  styleUrls: ['./to-do-list.component.css']
+  selector: "app-to-do-list",
+  templateUrl: "./to-do-list.component.html",
+  styleUrls: ["./to-do-list.component.css"]
 })
 export class ToDoListComponent {
-  taskContent: string = '';
+  taskContent = "";
   taskList: Task[] = [];
   translatedTaskList: Task[] = [];
   onSpanish = false;
+
+  token = this.authService.token;
 
   constructor(
     public translateService: TranslateService,
@@ -24,6 +26,10 @@ export class ToDoListComponent {
 
   ngOnInit(): void {
     this.onShow();
+  }
+
+  test() {
+    this.taskAction.test(this.token);
   }
 
   onShow() {
@@ -47,8 +53,8 @@ export class ToDoListComponent {
       this.taskAction
         .CreateTask(task)
         .then((result) => {
-          window.alert('Task added successfully.');
-          this.taskContent = '';
+          window.alert("Task added successfully.");
+          this.taskContent = "";
 
           this.taskAction.AddUID(result.id).catch((error) => {
             window.alert(error);
@@ -68,7 +74,7 @@ export class ToDoListComponent {
     this.taskAction
       .EditTask(taskUid)
       .then(() => {
-        window.alert('Task updated.');
+        window.alert("Task updated.");
       })
       .catch((error) => {
         window.alert(error);
@@ -83,7 +89,7 @@ export class ToDoListComponent {
     this.taskAction
       .DeleteTask(taskUid)
       .then(() => {
-        window.alert('Task deleted.');
+        window.alert("Task deleted.");
       })
       .catch((error) => {
         window.alert(error);

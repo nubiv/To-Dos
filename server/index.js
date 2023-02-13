@@ -18,7 +18,7 @@ app.use(
 );
 // enable CORS
 const corsOptions = {
-  origin: 'http://localhost:8081'
+  origin: 'http://localhost:4200'
 };
 app.use(cors(corsOptions));
 
@@ -33,6 +33,10 @@ db.sequelize
   .catch((err) => {
     console.log(err.message);
   });
+
+// use firebase admin middleware to decode token and check its validity, applied to all routes
+const firebaseTokenValidation = require('./src/middlewares');
+app.use(firebaseTokenValidation.decodeToken);
 
 // difine routes
 app.get('/', (req, res) => {

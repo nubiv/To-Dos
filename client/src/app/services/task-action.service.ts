@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Task } from './task';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Task } from "./task";
 import {
   AngularFirestore,
   AngularFirestoreCollection,
   AngularFirestoreDocument
-} from '@angular/fire/compat/firestore';
+} from "@angular/fire/compat/firestore";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class TaskActionService {
-  constructor(public afs: AngularFirestore) {}
+  constructor(public afs: AngularFirestore, private http: HttpClient) {}
 
   GetAllTasks() {
-    const user = JSON.parse(localStorage.getItem('user')!);
+    const user = JSON.parse(localStorage.getItem("user")!);
     const taskCollection: AngularFirestoreCollection<any> = this.afs.collection(
       `users/${user.uid}/tasks`
     );
@@ -22,7 +23,7 @@ export class TaskActionService {
   }
 
   CreateTask(task: Task) {
-    const user = JSON.parse(localStorage.getItem('user')!);
+    const user = JSON.parse(localStorage.getItem("user")!);
     const taskCollection: AngularFirestoreCollection<any> = this.afs.collection(
       `users/${user.uid}/tasks`
     );
@@ -38,7 +39,7 @@ export class TaskActionService {
   }
 
   EditTask(taskUid: string) {
-    const user = JSON.parse(localStorage.getItem('user')!);
+    const user = JSON.parse(localStorage.getItem("user")!);
     const taskRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}/tasks/${taskUid}`
     );
@@ -48,7 +49,7 @@ export class TaskActionService {
   }
 
   AddUID(taskUid: string) {
-    const user = JSON.parse(localStorage.getItem('user')!);
+    const user = JSON.parse(localStorage.getItem("user")!);
     const taskRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}/tasks/${taskUid}`
     );
@@ -57,11 +58,21 @@ export class TaskActionService {
   }
 
   DeleteTask(taskUid: string) {
-    const user = JSON.parse(localStorage.getItem('user')!);
+    const user = JSON.parse(localStorage.getItem("user")!);
     const taskRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}/tasks/${taskUid}`
     );
 
     return taskRef.delete();
+  }
+
+  test(token: any) {
+    this.http
+      .get("http://localhost:8000/api/tasks", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .subscribe((res) => console.log(res));
   }
 }

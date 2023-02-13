@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/horus2121/To-Dos/issues"
   },
+  "auto-changelog": {
+    "output": "CHANGELOG.md",
+    "template": "keepachangelog",
+    "unreleased": true,
+    "commitLimit": false
+  },
   "homepage": "https://github.com/horus2121/To-Dos#readme"
 }
