@@ -12,6 +12,7 @@ import { Router } from "@angular/router";
 })
 export class AuthService {
   userData: any; // Save logged in user data
+  token: any; // Save access token
   constructor(
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
@@ -23,11 +24,17 @@ export class AuthService {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
+        user.getIdToken().then((token) => (this.token = token));
+
         localStorage.setItem("user", JSON.stringify(this.userData));
+        localStorage.setItem("accessToken", JSON.stringify(this.token));
         JSON.parse(localStorage.getItem("user")!);
+        JSON.parse(localStorage.getItem("accessToken")!);
       } else {
         localStorage.setItem("user", "null");
+        localStorage.setItem("accessToken", "null");
         JSON.parse(localStorage.getItem("user")!);
+        JSON.parse(localStorage.getItem("accessToken")!);
       }
     });
   }
@@ -105,6 +112,7 @@ export class AuthService {
   SignOut() {
     return this.afAuth.signOut().then(() => {
       localStorage.removeItem("user");
+      localStorage.removeItem("accessToken");
       this.router.navigate(["login"]);
     });
   }
