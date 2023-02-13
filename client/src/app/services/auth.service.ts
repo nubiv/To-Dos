@@ -1,14 +1,14 @@
-import { Injectable, NgZone } from '@angular/core';
-import { User } from '../services/user';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Injectable, NgZone } from "@angular/core";
+import { User } from "../services/user";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
 import {
   AngularFirestore,
   AngularFirestoreDocument
-} from '@angular/fire/compat/firestore';
-import { Router } from '@angular/router';
+} from "@angular/fire/compat/firestore";
+import { Router } from "@angular/router";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthService {
   userData: any; // Save logged in user data
@@ -23,11 +23,11 @@ export class AuthService {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user')!);
+        localStorage.setItem("user", JSON.stringify(this.userData));
+        JSON.parse(localStorage.getItem("user")!);
       } else {
-        localStorage.setItem('user', 'null');
-        JSON.parse(localStorage.getItem('user')!);
+        localStorage.setItem("user", "null");
+        JSON.parse(localStorage.getItem("user")!);
       }
     });
   }
@@ -39,7 +39,7 @@ export class AuthService {
         this.SetUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
           if (user) {
-            this.router.navigate(['to-do-list']);
+            this.router.navigate(["to-do-list"]);
           }
         });
       })
@@ -64,9 +64,9 @@ export class AuthService {
   // Send email verfificaiton when new user sign up
   SendVerificationMail() {
     return this.afAuth.currentUser
-      .then((u: any) => u.sendEmailVerification())
+      .then((user: any) => user.sendEmailVerification())
       .then(() => {
-        this.router.navigate(['verify-email-address']);
+        this.router.navigate(["verify-email-address"]);
       });
   }
   // Reset Forggot password
@@ -74,7 +74,7 @@ export class AuthService {
     return this.afAuth
       .sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
-        window.alert('Password reset email sent, check your inbox.');
+        window.alert("Password reset email sent, check your inbox.");
       })
       .catch((error) => {
         window.alert(error);
@@ -82,7 +82,7 @@ export class AuthService {
   }
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user')!);
+    const user = JSON.parse(localStorage.getItem("user")!);
     return user !== null && user.emailVerified !== false ? true : false;
   }
   /* Setting up user data when sign in with username/password, 
@@ -104,8 +104,8 @@ export class AuthService {
   // Sign out
   SignOut() {
     return this.afAuth.signOut().then(() => {
-      localStorage.removeItem('user');
-      this.router.navigate(['login']);
+      localStorage.removeItem("user");
+      this.router.navigate(["login"]);
     });
   }
 }

@@ -34,6 +34,10 @@ db.sequelize
     console.log(err.message);
   });
 
+// use firebase admin middleware to decode token and check its validity, applied to all routes
+const firebaseTokenValidation = require('./src/middlewares');
+app.use(firebaseTokenValidation.decodeToken);
+
 // difine routes
 app.get('/', (req, res) => {
   res.send('Exprsss + TypeScript Server...');
