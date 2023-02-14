@@ -16,8 +16,6 @@ export class ToDoListComponent {
   translatedTaskList: Task[] = [];
   onSpanish = false;
 
-  token = this.authService.token;
-
   constructor(
     public translateService: TranslateService,
     public authService: AuthService,
@@ -28,8 +26,11 @@ export class ToDoListComponent {
     this.onShow();
   }
 
-  test() {
-    this.taskAction.test(this.token);
+  async test() {
+    const token = await this.authService.GetToken();
+    console.log(token);
+
+    return token;
   }
 
   onShow() {

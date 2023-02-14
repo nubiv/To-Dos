@@ -1,7 +1,9 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const dotenv = require('dotenv');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import router from './src/routes/index.js';
+import db from './src/models/index.js';
 
 dotenv.config();
 
@@ -24,7 +26,6 @@ app.use(cors(corsOptions));
 
 // connect to postsql
 // sync database, set force: ture to allow drop existing tables and re-sync database
-const db = require('./src/models');
 db.sequelize
   .sync({ force: true })
   .then(() => {
@@ -35,15 +36,15 @@ db.sequelize
   });
 
 // use firebase admin middleware to decode token and check its validity, applied to all routes
-const firebaseTokenValidation = require('./src/middlewares');
-app.use(firebaseTokenValidation.decodeToken);
+// const firebaseTokenValidation = require('./src/middlewares');
+// app.use(firebaseTokenValidation.decodeToken);
 
 // difine routes
 app.get('/', (req, res) => {
   res.send('Exprsss + TypeScript Server...');
 });
 
-require('./src/routes/task.routes')(app);
+app.use(router);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at port: ${port}...`);

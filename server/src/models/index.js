@@ -1,6 +1,6 @@
-const dbConfig = require('../config/db.config');
+import { dbConfig } from '../config/db.config.js';
+import Sequelize from 'sequelize';
 
-const Sequelize = require('sequelize');
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
@@ -17,6 +17,6 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.tasks = require('./task.model')(sequelize, Sequelize);
+// db.tasks = require('./task.model')(sequelize, Sequelize);
 
-module.exports = db;
+export default db;

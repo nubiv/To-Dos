@@ -1,6 +1,7 @@
 {
   "name": "to-dos-server",
   "version": "1.0.0",
+  "type": "module",
   "description": "To-dos server",
   "main": "index.js",
   "scripts": {
