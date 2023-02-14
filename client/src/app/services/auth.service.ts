@@ -12,7 +12,7 @@ import { Router } from "@angular/router";
 })
 export class AuthService {
   userData: any; // Save logged in user data
-  token: any; // Save access token
+  token: any;
   constructor(
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
@@ -24,18 +24,26 @@ export class AuthService {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
-        user.getIdToken().then((token) => (this.token = token));
 
         localStorage.setItem("user", JSON.stringify(this.userData));
-        localStorage.setItem("accessToken", JSON.stringify(this.token));
         JSON.parse(localStorage.getItem("user")!);
-        JSON.parse(localStorage.getItem("accessToken")!);
       } else {
         localStorage.setItem("user", "null");
-        localStorage.setItem("accessToken", "null");
         JSON.parse(localStorage.getItem("user")!);
-        JSON.parse(localStorage.getItem("accessToken")!);
       }
+    });
+  }
+  // get access token
+  GetToken() {
+    return new Promise((resolve, reject) => {
+      this.afAuth.onAuthStateChanged((user) => {
+        if (user) {
+          user.getIdToken().then((token) => {
+            this.token = token;
+            resolve(token);
+          });
+        }
+      });
     });
   }
   // Sign in with email/password
@@ -55,13 +63,14 @@ export class AuthService {
       });
   }
   // Sign up with email/password
-  SignUp(email: string, password: string) {
+  SignUp(email: string, password: string, displayName: string) {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
         /* Call the SendVerificaitonMail() function when new user sign 
         up and returns promise */
         this.SendVerificationMail();
+        result.user?.updateProfile({ displayName: displayName });
         this.SetUserData(result.user);
       })
       .catch((error) => {
@@ -99,11 +108,14 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
+
     const userData: User = {
       uid: user.uid,
+      displayName: user.displayName,
       email: user.email,
       emailVerified: user.emailVerified
     };
+
     return userRef.set(userData, {
       merge: true
     });

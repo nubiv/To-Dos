@@ -6,16 +6,16 @@
 
     <div class="register-form" fxLayout="row" fxLayoutAlign="center center">
       <mat-card-content>
-        <!-- <mat-form-field class="register-form-field">
+        <mat-form-field class="register-form-field">
           <input
             matInput
             type="text"
             class="formControl"
-            placeholder="Username"
-            #username
+            placeholder="displayName"
+            #displayName
             required
           />
-        </mat-form-field> -->
+        </mat-form-field>
 
         <mat-form-field class="register-form-field">
           <input
@@ -46,7 +46,9 @@
         type="button"
         class="btn btnPrimary"
         value="Sign Up"
-        (click)="authService.SignUp(userEmail.value, userPwd.value)"
+        (click)="
+          authService.SignUp(userEmail.value, userPwd.value, displayName.value)
+        "
       />
     </div>
 
