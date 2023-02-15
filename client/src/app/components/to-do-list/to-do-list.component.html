@@ -22,12 +22,12 @@
     <div class="task-container">
       <div class="taskList" *ngIf="!onSpanish">
         <ul *ngFor="let task of taskList">
-          <li [ngClass]="task.uid" fxLayout="row">
+          <li [ngClass]="task.id" fxLayout="row">
             <span>{{ task.content }}</span>
+            <span>{{ "id" + task.id }}</span>
             <input
               type="checkbox"
               class="example-margin"
-              [(ngModel)]="task.done"
               (change)="onChecked($event)"
             />
             DONE
@@ -38,12 +38,13 @@
 
       <div class="taskList" *ngIf="onSpanish">
         <ul *ngFor="let task of translatedTaskList">
-          <li [ngClass]="task.uid" fxLayout="row">
+          <li [ngClass]="task.id" fxLayout="row">
             <span>{{ task.content }}</span>
+            <span>{{ "id" + task.id }}</span>
             <input
               type="checkbox"
               class="checkbox"
-              [(ngModel)]="task.done"
+              [(ngModel)]="task.status"
               (change)="onChecked($event)"
             />
             DONE

@@ -15,55 +15,36 @@ export class TaskActionService {
 
   GetAllTasks() {
     const user = JSON.parse(localStorage.getItem("user")!);
-    const taskCollection: AngularFirestoreCollection<any> = this.afs.collection(
-      `users/${user.uid}/tasks`
-    );
 
-    return taskCollection.valueChanges();
+    return this.http.get(`/api/${user.uid}/tasks`);
   }
 
   CreateTask(task: Task) {
     const user = JSON.parse(localStorage.getItem("user")!);
-    const taskCollection: AngularFirestoreCollection<any> = this.afs.collection(
-      `users/${user.uid}/tasks`
-    );
-    const date = new Date();
 
-    const taskData: Task = {
+    const newTask = {
       content: task.content,
-      done: task.done,
-      createdAt: date
+      status: task.status
     };
 
-    return taskCollection.add(taskData);
+    return this.http.post(`/api/${user.uid}/tasks`, newTask);
   }
 
-  EditTask(taskUid: string) {
+  EditTask(taskId: number) {
     const user = JSON.parse(localStorage.getItem("user")!);
-    const taskRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}/tasks/${taskUid}`
-    );
-    const date = new Date();
 
-    return taskRef.update({ done: true, updatedAt: date });
+    const updatedTask = {
+      content: "something"
+    };
+
+    return this.http.patch(`/api/${user.uid}/tasks/${taskId}`, updatedTask);
   }
 
-  AddUID(taskUid: string) {
+  DeleteTask(taskId: number) {
     const user = JSON.parse(localStorage.getItem("user")!);
-    const taskRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}/tasks/${taskUid}`
-    );
+    console.log(taskId);
 
-    return taskRef.update({ uid: taskUid });
-  }
-
-  DeleteTask(taskUid: string) {
-    const user = JSON.parse(localStorage.getItem("user")!);
-    const taskRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}/tasks/${taskUid}`
-    );
-
-    return taskRef.delete();
+    return this.http.delete(`/api/${user.uid}/tasks/${taskId}`);
   }
 
   test(token: any) {
