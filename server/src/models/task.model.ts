@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import { sequelize } from '.';
 
 export const Task = sequelize.define(
-  'User',
+  'Task',
   {
     // Model attributes are defined here
     content: {
@@ -10,6 +10,10 @@ export const Task = sequelize.define(
       allowNull: false
     },
     status: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    userId: {
       type: DataTypes.STRING,
       allowNull: false
     }

@@ -4,6 +4,7 @@ import { TaskActionService } from "src/app/services/task-action.service";
 import { AuthService } from "src/app/services/auth.service";
 import { Task } from "src/app/services/task";
 import { map } from "rxjs/operators";
+import { pipe } from "rxjs";
 
 @Component({
   selector: "app-to-do-list",
@@ -12,7 +13,7 @@ import { map } from "rxjs/operators";
 })
 export class ToDoListComponent {
   taskContent = "";
-  taskList: Task[] = [];
+  taskList = [] as any;
   translatedTaskList: Task[] = [];
   onSpanish = false;
 
@@ -34,7 +35,11 @@ export class ToDoListComponent {
   }
 
   onShow() {
-    this.taskAction.GetAllTasks().subscribe((docs) => (this.taskList = docs));
+    // this.taskAction.GetAllTasks().subscribe((docs) => (this.taskList = docs));
+    this.taskAction.GetAllTasks().subscribe((tasks) => {
+      this.taskList = tasks;
+      console.log(tasks);
+    });
   }
 
   onChangeInput(event: Event) {
@@ -48,74 +53,58 @@ export class ToDoListComponent {
     if (this.taskContent) {
       const task = {
         content: this.taskContent,
-        done: false
+        status: "UNDONE"
       };
 
-      this.taskAction
-        .CreateTask(task)
-        .then((result) => {
-          window.alert("Task added successfully.");
-          this.taskContent = "";
-
-          this.taskAction.AddUID(result.id).catch((error) => {
-            window.alert(error);
-          });
-        })
-        .catch((error) => {
-          window.alert(error);
-        });
+      this.taskAction.CreateTask(task).subscribe((result) => {
+        window.alert("Task added successfully.");
+        console.log(result);
+        this.taskContent = "";
+      });
     }
   }
 
   onChecked(event: Event) {
     const target = event.target as HTMLInputElement;
     const li = target.parentElement?.parentElement as HTMLLIElement;
-    const taskUid = li.className;
+    const taskId = parseInt(li.className);
 
-    this.taskAction
-      .EditTask(taskUid)
-      .then(() => {
-        window.alert("Task updated.");
-      })
-      .catch((error) => {
-        window.alert(error);
-      });
+    this.taskAction.EditTask(taskId).subscribe(() => {
+      window.alert("Task updated.");
+    });
   }
 
   onDeleteTask(event: Event) {
     const target = event.target as HTMLButtonElement;
     const li = target.parentElement as HTMLLIElement;
-    const taskUid = li.className;
+    const taskId = parseInt(li.className);
+    console.log(li);
+    console.log(taskId);
 
-    this.taskAction
-      .DeleteTask(taskUid)
-      .then(() => {
-        window.alert("Task deleted.");
-      })
-      .catch((error) => {
-        window.alert(error);
-      });
+    this.taskAction.DeleteTask(taskId).subscribe(() => {
+      window.alert("Task deleted.");
+    });
   }
 
   onSwitchToSP() {
     this.onSpanish = true;
 
-    this.taskAction
-      .GetAllTasks()
-      .pipe(
-        map((tasks) => {
-          tasks.map((task) =>
-            this.translateService
-              .translate(task.content)
-              .subscribe((result) => (task.content = result))
-          );
+    // this.taskAction
+    //   .GetAllTasks()
+    //   .pipe(
+    //     map((tasks) => {
+    //       tasks.map((task) =>
+    //         this.translateService
+    //           .translate(task.content)
+    //           .subscribe((result) => (task.content = result))
+    //       );
 
-          return tasks;
-        })
-      )
-      .subscribe(
-        (translatedTasks) => (this.translatedTaskList = translatedTasks)
-      );
+    //       return tasks;
+    //     })
+    //   )
+    //   .subscribe(
+    //     (translatedTasks) => (this.translatedTaskList = translatedTasks)
+    //   );
   }
 
   onSwitchToEN() {
