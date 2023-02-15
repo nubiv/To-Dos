@@ -1,6 +1,6 @@
-import admin from '../config/firebase.config.js';
+import admin from '../config/firebase.config';
 
-export const checkIfAuthenticated = async (req, res, next) => {
+export const checkIfAuthenticated = async (req:any, res:any, next: any) => {
   const token = req.headers.authorization.split(' ')[1];
 
   try {
@@ -17,7 +17,7 @@ export const checkIfAuthenticated = async (req, res, next) => {
   }
 };
 
-export const checkIfAdmin = async (req, res, next) => {
+export const checkIfAdmin = async (req: any, res: any, next:any) => {
   const token = req.headers.authorization.split(' ')[1];
 
   try {

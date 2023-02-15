@@ -1,9 +1,9 @@
-import express from 'express';
-import bodyParser from 'body-parser';
+import express , { Request, Response, NextFunction } from 'express';
+import { json, urlencoded, } from 'body-parser';
+import { sequelize } from './models/index';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import router from './src/routes/index.js';
-import db from './src/models/index.js';
+import router from './routes/index';
 
 dotenv.config();
 
@@ -12,9 +12,9 @@ const port = process.env.PORT;
 
 // set up middlewares
 // use body-parser to parse incoming request bodies (json, urlencoded), under req.body property
-app.use(bodyParser.json());
+app.use(json());
 app.use(
-  bodyParser.urlencoded({
+  urlencoded({
     extended: true
   })
 );
@@ -22,29 +22,33 @@ app.use(
 const corsOptions = {
   origin: 'http://localhost:4200'
 };
-app.use(cors(corsOptions));
+app.use(cors<Request>(corsOptions));
 
 // connect to postsql
 // sync database, set force: ture to allow drop existing tables and re-sync database
-db.sequelize
+sequelize
   .sync({ force: true })
   .then(() => {
     console.log('Synced db.');
   })
-  .catch((err) => {
+  .catch((err: any) => {
     console.log(err.message);
   });
 
-// use firebase admin middleware to decode token and check its validity, applied to all routes
-// const firebaseTokenValidation = require('./src/middlewares');
-// app.use(firebaseTokenValidation.decodeToken);
-
 // difine routes
-app.get('/', (req, res) => {
-  res.send('Exprsss + TypeScript Server...');
-});
+app.use('/', router);
 
-app.use(router);
+// Error handler
+app.use(
+    (
+        err: Error,
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) => {
+        res.status(500).json({message: err.message})
+    }
+)
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at port: ${port}...`);

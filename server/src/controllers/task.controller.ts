@@ -1,12 +1,18 @@
-import db from '../models/index.js';
-const Task = db.tasks;
-const Op = db.Sequelize.Op;
+import { RequestHandler } from "express";
+import { Task } from '../models/task.model'
 
-exports.create = (req, res) => {
+export const createTask: RequestHandler = async (req, res, next) => {
   // validate request
+  console.log(req.body.content)
   if (!req.body.content) {
     res.status(400).send({
       message: 'Content can not be empty.'
+    });
+    return;
+  }
+  if (!req.body.content) {
+    res.status(400).send({
+      message: 'Status can not be empty.'
     });
     return;
   }
@@ -25,12 +31,12 @@ exports.create = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || 'Some error occurred while creating the Tutorial.'
+          err.message || 'Some error occurred while creating the task.'
       });
     });
-};
+}
 
-exports.findAll = (req, res) => {
+export const getAllTasks: RequestHandler = async (req, res, next) => {
   Task.findAll()
     .then((data) => {
       res.send(data);
@@ -40,14 +46,4 @@ exports.findAll = (req, res) => {
         message: err.message || 'Some error occurred while retrieving tasks'
       });
     });
-};
-
-exports.findOne = (req, res) => {};
-
-exports.update = (req, res) => {};
-
-exports.delete = (req, res) => {};
-
-exports.deleteAll = (req, res) => {};
-
-exports.findAllUndone = (req, res) => {};
+}
