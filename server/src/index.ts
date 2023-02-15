@@ -1,5 +1,5 @@
-import express , { Request, Response, NextFunction } from 'express';
-import { json, urlencoded, } from 'body-parser';
+import express, { Request, Response, NextFunction } from 'express';
+import { json, urlencoded } from 'body-parser';
 import { sequelize } from './models/index';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -31,7 +31,7 @@ sequelize
   .then(() => {
     console.log('Synced db.');
   })
-  .catch((err: any) => {
+  .catch((err) => {
     console.log(err.message);
   });
 
@@ -39,16 +39,9 @@ sequelize
 app.use('/', router);
 
 // Error handler
-app.use(
-    (
-        err: Error,
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ) => {
-        res.status(500).json({message: err.message})
-    }
-)
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  res.status(500).json({ message: err.message });
+});
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at port: ${port}...`);
