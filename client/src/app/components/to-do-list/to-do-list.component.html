@@ -10,24 +10,20 @@
 
     <div fxLayout="row" fxLayoutAlign="center center">
       <label>New Task</label>
-      <input
-        type="text"
-        (input)="onChangeInput($event)"
-        [value]="taskContent"
-        placeholder="Enter a new task"
-      />
-      <button (click)="onAddTask()" [disabled]="!taskContent">Add</button>
+      <input #taskContent type="text" placeholder="Enter a new task" />
+      <button (click)="onAddTask(taskContent.value)" [disabled]="!taskContent">
+        Add
+      </button>
     </div>
 
     <div class="task-container">
       <div class="taskList" *ngIf="!onSpanish">
         <ul *ngFor="let task of taskList">
-          <li [ngClass]="task.id" fxLayout="row">
+          <li id="{{ task.id }}" fxLayout="row">
             <span>{{ task.content }}</span>
-            <span>{{ "id" + task.id }}</span>
             <input
               type="checkbox"
-              class="example-margin"
+              [(ngModel)]="task.status"
               (change)="onChecked($event)"
             />
             DONE
@@ -38,16 +34,14 @@
 
       <div class="taskList" *ngIf="onSpanish">
         <ul *ngFor="let task of translatedTaskList">
-          <li [ngClass]="task.id" fxLayout="row">
+          <li id="{{ task.id }}" fxLayout="row">
             <span>{{ task.content }}</span>
-            <span>{{ "id" + task.id }}</span>
             <input
               type="checkbox"
-              class="checkbox"
               [(ngModel)]="task.status"
               (change)="onChecked($event)"
             />
-            DONE
+            HECHO
             <button (click)="onDeleteTask($event)">Delete</button>
           </li>
         </ul>
