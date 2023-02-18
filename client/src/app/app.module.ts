@@ -1,32 +1,40 @@
-import { NgModule, isDevMode } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { NgModule, isDevMode } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { HttpClientModule } from "@angular/common/http";
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RegisterComponent } from './components/register/register.component';
-import { LoginComponent } from './components/login/login.component';
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ToDoListComponent } from './components/to-do-list/to-do-list.component';
-import { ProfileComponent } from './components/profile/profile.component';
-import { HomeComponent } from './components/home/home.component';
+// components
+import { RegisterComponent } from "./components/register/register.component";
+import { LoginComponent } from "./components/login/login.component";
+import { ToDoListComponent } from "./components/to-do-list/to-do-list.component";
+import { ProfileComponent } from "./components/profile/profile.component";
+import { HomeComponent } from "./components/home/home.component";
+import { ForgotPasswordComponent } from "./components/forgot-password/forgot-password.component";
+import { VerifyEmailComponent } from "./components/verify-email/verify-email.component";
 
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-import { environment } from '../env/environments';
-import { AuthService } from './services/auth.service';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
-import { AngularMaterialModule } from './angular-material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { EffectsModule } from '@ngrx/effects';
+// firebase modules
+import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFireAuthModule } from "@angular/fire/compat/auth";
+import { AngularFireStorageModule } from "@angular/fire/compat/storage";
+import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
+import { AngularFireDatabaseModule } from "@angular/fire/compat/database";
+import { environment } from "../env/environments";
+import { AuthService } from "./services/auth.service";
+
+// ng material module
+import { AngularMaterialModule } from "./angular-material.module";
+
+// ngrx modules
+import { StoreModule } from "@ngrx/store";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { EffectsModule } from "@ngrx/effects";
+import { TasksEffect } from "./state/tasks";
+import { reducers, metaReducers } from "./state";
 
 @NgModule({
   declarations: [
@@ -53,9 +61,9 @@ import { EffectsModule } from '@ngrx/effects';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(reducers, { metaReducers }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([TasksEffect])
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

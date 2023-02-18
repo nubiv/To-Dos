@@ -1,10 +1,18 @@
 import { Component } from "@angular/core";
 import { TranslateService } from "../../services/translate.service";
-import { TaskActionService } from "src/app/services/task-action.service";
+import { TasksService } from "src/app/services/tasks.service";
 import { AuthService } from "src/app/services/auth.service";
-import { Task } from "src/app/services/task";
+import { Task } from "src/app/models";
 import { map } from "rxjs/operators";
 import { pipe } from "rxjs";
+import {
+  loadTaskListInitiated,
+  addNewTaskSubmitted,
+  selectTaskList,
+  deleteTaskSubmitted,
+  editTaskSubmitted
+} from "src/app/state/tasks";
+import { Store } from "@ngrx/store";
 
 @Component({
   selector: "app-to-do-list",
@@ -12,19 +20,21 @@ import { pipe } from "rxjs";
   styleUrls: ["./to-do-list.component.css"]
 })
 export class ToDoListComponent {
-  taskContent = "";
-  taskList = [] as any;
+  taskList$ = this.store.select(selectTaskList);
+  taskList: Task[] = [];
   translatedTaskList: Task[] = [];
   onSpanish = false;
 
   constructor(
     public translateService: TranslateService,
     public authService: AuthService,
-    public taskAction: TaskActionService
+    public tasksService: TasksService,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
-    this.onShow();
+    this.store.dispatch(loadTaskListInitiated());
+    this.taskList$.subscribe((state) => (this.taskList = state));
   }
 
   async test() {
@@ -36,79 +46,91 @@ export class ToDoListComponent {
 
   onShow() {
     // this.taskAction.GetAllTasks().subscribe((docs) => (this.taskList = docs));
-    this.taskAction.GetAllTasks().subscribe((tasks) => {
-      this.taskList = tasks;
-      console.log(tasks);
-    });
+    // this.tasksService
+    //   .getTaskList()
+    //   .pipe(
+    //     map((data: any) =>
+    //       data.map((task: Task) => {
+    //         const serializedTask = {
+    //           content: task.content,
+    //           id: task.id,
+    //           status: task.status,
+    //           createAt: task.createdAt,
+    //           updatedAt: task.updatedAt
+    //         };
+    //         return serializedTask;
+    //       })
+    //     )
+    //   )
+    //   .subscribe((tasks: Task[]) => {
+    //     this.taskList = tasks;
+    //     console.log(tasks);
+    //   });
   }
 
-  onChangeInput(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const value: string = target.value;
-
-    this.taskContent = value;
-  }
-
-  onAddTask() {
-    if (this.taskContent) {
+  onAddTask(taskContent: string) {
+    if (taskContent) {
       const task = {
-        content: this.taskContent,
+        content: taskContent,
         status: "UNDONE"
       };
 
-      this.taskAction.CreateTask(task).subscribe((result) => {
-        window.alert("Task added successfully.");
-        console.log(result);
-        this.taskContent = "";
-      });
+      this.store.dispatch(addNewTaskSubmitted({ task }));
+      // this.tasksService.addNewTask(task).subscribe((result) => {
+      //   window.alert("Task added successfully.");
+      //   console.log(result);
+      //   taskContent = "";
+      // });
     }
+    console.log(this.taskList);
   }
 
   onChecked(event: Event) {
     const target = event.target as HTMLInputElement;
-    const li = target.parentElement?.parentElement as HTMLLIElement;
-    const taskId = parseInt(li.className);
+    const li = target.parentElement as HTMLLIElement;
+    const taskId = parseInt(li.id);
 
-    this.taskAction.EditTask(taskId).subscribe(() => {
-      window.alert("Task updated.");
-    });
+    // this.tasksService.editTask(taskId).subscribe(() => {
+    //   window.alert("Task updated.");
+    // });
+    // this.store.dispatch(editTaskSubmitted());
   }
 
   onDeleteTask(event: Event) {
     const target = event.target as HTMLButtonElement;
     const li = target.parentElement as HTMLLIElement;
-    const taskId = parseInt(li.className);
-    console.log(li);
-    console.log(taskId);
+    const taskId = parseInt(li.id);
 
-    this.taskAction.DeleteTask(taskId).subscribe(() => {
-      window.alert("Task deleted.");
-    });
+    // this.tasksService.deleteTask(taskId).subscribe(() => {
+    //   window.alert("Task deleted.");
+    // });
+    this.store.dispatch(deleteTaskSubmitted({ taskId }));
   }
 
   onSwitchToSP() {
     this.onSpanish = true;
 
-    // this.taskAction
-    //   .GetAllTasks()
-    //   .pipe(
-    //     map((tasks) => {
-    //       tasks.map((task) =>
-    //         this.translateService
-    //           .translate(task.content)
-    //           .subscribe((result) => (task.content = result))
-    //       );
+    this.tasksService
+      .getTaskList()
+      .pipe(
+        map((tasks: any) => {
+          tasks.map((task: Task) =>
+            this.translateService
+              .translate(task.content)
+              .subscribe((result) => (task.content = result))
+          );
 
-    //       return tasks;
-    //     })
-    //   )
-    //   .subscribe(
-    //     (translatedTasks) => (this.translatedTaskList = translatedTasks)
-    //   );
+          return tasks;
+        })
+      )
+      .subscribe(
+        (translatedTasks) => (this.translatedTaskList = translatedTasks)
+      );
   }
 
   onSwitchToEN() {
     this.onSpanish = false;
     this.translatedTaskList = [];
+    this.onShow();
   }
 }
