@@ -7,13 +7,11 @@ import { AuthService } from "./auth.service";
   providedIn: "root"
 })
 export class TasksService {
-  token = "";
+  token = this.authService.token;
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   getTaskList() {
     const user = JSON.parse(localStorage.getItem("user")!);
-    this.authService.GetToken().then((data: any) => (this.token = data));
-    console.log(this.token);
 
     return this.http.get(`/api/${user.uid}/tasks`, {
       headers: {
@@ -24,8 +22,8 @@ export class TasksService {
 
   addNewTask(task: Task) {
     const user = JSON.parse(localStorage.getItem("user")!);
+    console.log(this.token);
 
-    console.log(user);
     const newTask = {
       content: task.content,
       status: task.status,
@@ -56,7 +54,6 @@ export class TasksService {
   }
 
   deleteTask(taskId: number) {
-    console.log(taskId);
     const user = JSON.parse(localStorage.getItem("user")!);
 
     return this.http.delete(`/api/${user.uid}/tasks/${taskId}`, {
@@ -64,15 +61,5 @@ export class TasksService {
         Authorization: `Bearer ${this.token}`
       }
     });
-  }
-
-  test(token: any) {
-    this.http
-      .get("http://localhost:8000/api/tasks", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .subscribe((res) => console.log(res));
   }
 }

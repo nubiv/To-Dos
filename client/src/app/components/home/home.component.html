@@ -8,12 +8,20 @@
       <img src="assets/4697260.png" alt="" />
     </div>
 
-    <div *ngIf="isLoggedIn()" fxLayout="row" fxLayoutAlign="center center">
+    <div
+      *ngIf="this.authService.isLoggedIn"
+      fxLayout="row"
+      fxLayoutAlign="center center"
+    >
       <button routerLink="/to-do-list">My TO-DO List</button>
-      <button (click)="authService.SignOut()">Sign out</button>
+      <button (click)="authService.signOut()">Sign out</button>
     </div>
 
-    <div *ngIf="!isLoggedIn()" fxLayout="row" fxLayoutAlign="center center">
+    <div
+      *ngIf="!this.authService.isLoggedIn"
+      fxLayout="row"
+      fxLayoutAlign="center center"
+    >
       <button routerLink="/login">Log in</button>
       <button routerLink="/register">Sign up</button>
     </div>
