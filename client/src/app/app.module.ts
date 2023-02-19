@@ -35,6 +35,7 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { EffectsModule } from "@ngrx/effects";
 import { TasksEffect } from "./state/tasks";
 import { reducers, metaReducers } from "./state";
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { reducers, metaReducers } from "./state";
     ProfileComponent,
     HomeComponent,
     ForgotPasswordComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

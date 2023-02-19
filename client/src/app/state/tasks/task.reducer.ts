@@ -1,11 +1,15 @@
-import { Action, createReducer, on } from "@ngrx/store";
-import * as TaskAction from "./task.action";
-import { initialState, TaskListState } from "./task.state";
+import { Action, createReducer, on } from '@ngrx/store';
+import * as TaskAction from './task.action';
+import { initialState, TaskListState } from './task.state';
 
 const tasksReducer = createReducer(
   initialState,
   on(TaskAction.loadTaskListSuccess, (state, action) => {
-    return [...action.payload];
+    if (action.payload) {
+      return [...action.payload];
+    } else {
+      return [...state];
+    }
   }),
   on(TaskAction.addNewTaskSuccess, (state, action) => {
     return [...state, action.payload];

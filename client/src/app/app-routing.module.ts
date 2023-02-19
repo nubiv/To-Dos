@@ -8,6 +8,8 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './guard/auth.guard';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminGuard } from './guard/admin.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +23,7 @@ const routes: Routes = [
     component: ToDoListComponent,
     canActivate: [AuthGuard]
   },
+  { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 

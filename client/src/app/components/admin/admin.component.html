@@ -8,31 +8,32 @@
       <mat-card-title>{{ user.email }}</mat-card-title>
     </mat-card-header>
 
-    <div fxLayout="row" fxLayoutAlign="center center">
+    <!-- <div fxLayout="row" fxLayoutAlign="center center">
       <label>New Task</label>
       <input #taskContent type="text" placeholder="Enter a new task" />
       <button (click)="onAddTask(taskContent.value)" [disabled]="!taskContent">
         Add
       </button>
-    </div>
+    </div> -->
 
     <div class="task-container">
-      <div class="taskList" *ngIf="!onSpanish">
-        <ul *ngFor="let task of taskList">
-          <li id="{{ task.id }}" fxLayout="row">
-            <span>{{ task.content }}</span>
-            <input
+      <div class="taskList">
+        <ul *ngFor="let user of userList">
+          <li id="{{ user.uid }}" fxLayout="row">
+            <span>{{ user.displayName }}- </span>
+            <span>{{ user.email }}- </span>
+            <!-- <input
               type="checkbox"
-              [(ngModel)]="task.status"
-              (change)="onChecked($event)"
+              [(ngModel)]="user.isAdmin"
+              (change)="onUpdateUserAuthorization($event, user.isAdmin)"
             />
-            DONE
-            <button (click)="onDeleteTask($event)">Delete</button>
+            Admin? -->
+            <button (click)="onDeleteUser($event)">Delete</button>
           </li>
         </ul>
       </div>
 
-      <div class="taskList" *ngIf="onSpanish">
+      <!-- <div class="taskList" *ngIf="onSpanish">
         <ul *ngFor="let task of translatedTaskList">
           <li id="{{ task.id }}" fxLayout="row">
             <span>{{ task.content }}</span>
@@ -46,25 +47,26 @@
           </li>
         </ul>
       </div>
-    </div>
+    </div> -->
 
-    <div *ngIf="!onSpanish" fxLayout="row" fxLayoutAlign="center center">
+      <!-- <div *ngIf="!onSpanish" fxLayout="row" fxLayoutAlign="center center">
       <button (click)="onSwitchToSP()">Translate to Espanol!</button>
     </div>
 
     <div *ngIf="onSpanish" fxLayout="row" fxLayoutAlign="center center">
       <button (click)="onSwitchToEN()">Back to English!</button>
-    </div>
+    </div> -->
 
-    <div fxLayout="row" fxLayoutAlign="center center">
-      <button
-        (click)="authService.signOut()"
-        fxLayout="row"
-        fxLayoutAlign="center center"
-      >
-        Sign out
-      </button>
-      <button routerLink="/home">Home</button>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <button
+          (click)="authService.signOut()"
+          fxLayout="row"
+          fxLayoutAlign="center center"
+        >
+          Sign out
+        </button>
+        <button routerLink="/home">Home</button>
+      </div>
     </div>
   </mat-card>
 </div>
