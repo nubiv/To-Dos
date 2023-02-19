@@ -1,14 +1,14 @@
-import { Injectable, NgZone } from "@angular/core";
-import { User } from "../models";
-import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { Injectable, NgZone } from '@angular/core';
+import { User } from '../models';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
   AngularFirestoreDocument
-} from "@angular/fire/compat/firestore";
-import { Router } from "@angular/router";
+} from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class AuthService {
   userData: any; // Save logged in user data
@@ -24,11 +24,11 @@ export class AuthService {
       if (user) {
         this.userData = user;
 
-        localStorage.setItem("user", JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem("user")!);
+        localStorage.setItem('user', JSON.stringify(this.userData));
+        JSON.parse(localStorage.getItem('user')!);
       } else {
-        localStorage.setItem("user", "null");
-        JSON.parse(localStorage.getItem("user")!);
+        localStorage.setItem('user', 'null');
+        JSON.parse(localStorage.getItem('user')!);
       }
     });
   }
@@ -41,7 +41,7 @@ export class AuthService {
         this.setUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
           if (user) {
-            this.router.navigate(["to-do-list"]);
+            this.router.navigate(['to-do-list']);
           }
         });
       })
@@ -69,7 +69,7 @@ export class AuthService {
     return this.afAuth.currentUser
       .then((user: any) => user.sendEmailVerification())
       .then(() => {
-        this.router.navigate(["verify-email-address"]);
+        this.router.navigate(['verify-email-address']);
       });
   }
   // Reset Forggot password
@@ -77,7 +77,7 @@ export class AuthService {
     return this.afAuth
       .sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
-        window.alert("Password reset email sent, check your inbox.");
+        window.alert('Password reset email sent, check your inbox.');
       })
       .catch((error) => {
         window.alert(error);
@@ -85,13 +85,19 @@ export class AuthService {
   }
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem("user")!);
+    const user = JSON.parse(localStorage.getItem('user')!);
     return user !== null && user.emailVerified !== false ? true : false;
   }
   get token(): string | null {
-    const token = JSON.parse(localStorage.getItem("user")!).stsTokenManager
-      .accessToken;
-    return token ? token : "";
+    const user = JSON.parse(localStorage.getItem('user')!);
+
+    return user.stsTokenManager.accessToken;
+  }
+  getCustomClaim() {
+    return this.afAuth.currentUser.then((user: any) => {
+      console.log(user);
+      user?.getIdTokenResult();
+    });
   }
   // Set up user data after signing in with username/password,
   // sign up with username/password using AngularFirestore + AngularFirestoreDocument service
@@ -115,8 +121,8 @@ export class AuthService {
   // Sign out
   signOut() {
     return this.afAuth.signOut().then(() => {
-      localStorage.removeItem("user");
-      this.router.navigate(["login"]);
+      localStorage.removeItem('user');
+      this.router.navigate(['login']);
     });
   }
 }
