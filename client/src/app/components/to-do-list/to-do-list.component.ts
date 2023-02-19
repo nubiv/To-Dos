@@ -37,37 +37,6 @@ export class ToDoListComponent {
     this.taskList$.subscribe((state) => (this.taskList = state));
   }
 
-  async test() {
-    const token = await this.authService.GetToken();
-    console.log(token);
-
-    return token;
-  }
-
-  onShow() {
-    // this.taskAction.GetAllTasks().subscribe((docs) => (this.taskList = docs));
-    // this.tasksService
-    //   .getTaskList()
-    //   .pipe(
-    //     map((data: any) =>
-    //       data.map((task: Task) => {
-    //         const serializedTask = {
-    //           content: task.content,
-    //           id: task.id,
-    //           status: task.status,
-    //           createAt: task.createdAt,
-    //           updatedAt: task.updatedAt
-    //         };
-    //         return serializedTask;
-    //       })
-    //     )
-    //   )
-    //   .subscribe((tasks: Task[]) => {
-    //     this.taskList = tasks;
-    //     console.log(tasks);
-    //   });
-  }
-
   onAddTask(taskContent: string) {
     if (taskContent) {
       const task = {
@@ -82,7 +51,6 @@ export class ToDoListComponent {
       //   taskContent = "";
       // });
     }
-    console.log(this.taskList);
   }
 
   onChecked(event: Event) {
@@ -131,6 +99,5 @@ export class ToDoListComponent {
   onSwitchToEN() {
     this.onSpanish = false;
     this.translatedTaskList = [];
-    this.onShow();
   }
 }
