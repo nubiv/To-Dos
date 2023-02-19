@@ -1,17 +1,17 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Task } from "../models";
-import { AuthService } from "./auth.service";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Task } from '../models';
+import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class TasksService {
   token = this.authService.token;
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   getTaskList() {
-    const user = JSON.parse(localStorage.getItem("user")!);
+    const user = JSON.parse(localStorage.getItem('user')!);
 
     return this.http.get(`/api/${user.uid}/tasks`, {
       headers: {
@@ -21,8 +21,7 @@ export class TasksService {
   }
 
   addNewTask(task: Task) {
-    const user = JSON.parse(localStorage.getItem("user")!);
-    console.log(this.token);
+    const user = JSON.parse(localStorage.getItem('user')!);
 
     const newTask = {
       content: task.content,
@@ -38,7 +37,7 @@ export class TasksService {
   }
 
   editTask(task: Task) {
-    const user = JSON.parse(localStorage.getItem("user")!);
+    const user = JSON.parse(localStorage.getItem('user')!);
 
     const updatedTask = {
       content: task.content,
@@ -54,7 +53,7 @@ export class TasksService {
   }
 
   deleteTask(taskId: number) {
-    const user = JSON.parse(localStorage.getItem("user")!);
+    const user = JSON.parse(localStorage.getItem('user')!);
 
     return this.http.delete(`/api/${user.uid}/tasks/${taskId}`, {
       headers: {
