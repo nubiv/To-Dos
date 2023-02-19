@@ -1,23 +1,23 @@
-import { Component } from "@angular/core";
-import { TranslateService } from "../../services/translate.service";
-import { TasksService } from "src/app/services/tasks.service";
-import { AuthService } from "src/app/services/auth.service";
-import { Task } from "src/app/models";
-import { map } from "rxjs/operators";
-import { pipe } from "rxjs";
+import { Component } from '@angular/core';
+import { TranslateService } from '../../services/translate.service';
+import { TasksService } from 'src/app/services/tasks.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Task } from 'src/app/models';
+import { map } from 'rxjs/operators';
+import { pipe } from 'rxjs';
 import {
   loadTaskListInitiated,
   addNewTaskSubmitted,
   selectTaskList,
   deleteTaskSubmitted,
   editTaskSubmitted
-} from "src/app/state/tasks";
-import { Store } from "@ngrx/store";
+} from 'src/app/state/tasks';
+import { Store } from '@ngrx/store';
 
 @Component({
-  selector: "app-to-do-list",
-  templateUrl: "./to-do-list.component.html",
-  styleUrls: ["./to-do-list.component.css"]
+  selector: 'app-to-do-list',
+  templateUrl: './to-do-list.component.html',
+  styleUrls: ['./to-do-list.component.css']
 })
 export class ToDoListComponent {
   taskList$ = this.store.select(selectTaskList);
@@ -39,9 +39,9 @@ export class ToDoListComponent {
 
   onAddTask(taskContent: string) {
     if (taskContent) {
-      const task = {
+      const task: Task = {
         content: taskContent,
-        status: "UNDONE"
+        status: 'TO DO'
       };
 
       this.store.dispatch(addNewTaskSubmitted({ task }));
