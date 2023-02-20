@@ -1,6 +1,7 @@
 export interface Task {
   id?: number;
   content: string;
+  translatedContent?: string;
   status?: STATUS;
   createdAt?: Date;
   updatedAt?: Date;

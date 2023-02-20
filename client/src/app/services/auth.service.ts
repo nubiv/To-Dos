@@ -41,7 +41,8 @@ export class AuthService {
         this.setUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
           if (user) {
-            this.router.navigate(['to-do-list']);
+            window.alert('Welcome!');
+            this.router.navigate(['home']);
           }
         });
       })
@@ -57,6 +58,7 @@ export class AuthService {
         /* Call the SendVerificaitonMail() function when new user sign 
         up and returns promise */
         this.sendVerificationMail();
+        window.alert('Verification email sent, check your inbox.');
         result.user?.updateProfile({ displayName: displayName });
         this.setUserData(result.user);
       })
@@ -88,17 +90,23 @@ export class AuthService {
     const user = JSON.parse(localStorage.getItem('user')!);
     return user !== null && user.emailVerified !== false ? true : false;
   }
-  get token(): string | null {
+  get token(): string {
     const user = JSON.parse(localStorage.getItem('user')!);
 
-    return user.stsTokenManager.accessToken;
+    if (user) {
+      return user.stsTokenManager.accessToken;
+    } else {
+      this.router.navigate(['home']);
+      return '';
+    }
   }
-  getCustomClaim() {
-    return this.afAuth.currentUser.then((user: any) => {
-      console.log(user);
-      user?.getIdTokenResult();
-    });
-  }
+  // getCustomClaim() {
+  //   return this.afAuth.currentUser.then((user: any) => {
+  //     console.log(user);
+  //     user?.getIdTokenResult();
+  //   });
+  // }
+
   // Set up user data after signing in with username/password,
   // sign up with username/password using AngularFirestore + AngularFirestoreDocument service
   setUserData(user: any) {
