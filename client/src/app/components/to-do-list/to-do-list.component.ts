@@ -10,7 +10,8 @@ import {
   addNewTaskSubmitted,
   selectTaskList,
   deleteTaskSubmitted,
-  editTaskSubmitted
+  editTaskSubmitted,
+  injectTranslatedContentInitiated
 } from 'src/app/state/tasks';
 import { Store } from '@ngrx/store';
 
@@ -22,8 +23,8 @@ import { Store } from '@ngrx/store';
 export class ToDoListComponent {
   taskList$ = this.store.select(selectTaskList);
   taskList: Task[] = [];
-  translatedTaskList: Task[] = [];
   onSpanish = false;
+  tranlatable = true;
 
   constructor(
     public translateService: TranslateService,
@@ -78,26 +79,37 @@ export class ToDoListComponent {
   onSwitchToSP() {
     this.onSpanish = true;
 
-    this.tasksService
-      .getTaskList()
-      .pipe(
-        map((tasks: any) => {
-          tasks.map((task: Task) =>
-            this.translateService
-              .translate(task.content)
-              .subscribe((result) => (task.content = result))
-          );
+    // this.tasksService
+    //   .getTaskList()
+    //   .pipe(
+    //     map((tasks: any) => {
+    //       tasks.map((task: Task) =>
+    //         this.translateService
+    //           .translate(task.content)
+    //           .subscribe((result) => (task.content = result))
+    //       );
 
-          return tasks;
-        })
-      )
-      .subscribe(
-        (translatedTasks) => (this.translatedTaskList = translatedTasks)
-      );
+    //       return tasks;
+    //     })
+    //   )
+    //   .subscribe(
+    //     (translatedTasks) => (this.translatedTaskList = translatedTasks)
+    //   );
+
+    // only allow to translate the entire task list once
+    if (this.tranlatable) {
+      this.taskList.forEach((task: Task) => {
+        this.store.dispatch(
+          injectTranslatedContentInitiated({
+            task: task
+          })
+        );
+      });
+      this.tranlatable = false;
+    }
   }
 
   onSwitchToEN() {
     this.onSpanish = false;
-    this.translatedTaskList = [];
   }
 }

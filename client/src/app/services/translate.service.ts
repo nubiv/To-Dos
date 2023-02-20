@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Task } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +12,19 @@ export class TranslateService {
 
   constructor(private http: HttpClient) {}
 
-  translate(text: string) {
+  translate(task: Task) {
     return this.http
       .post(this.url, {
-        q: text,
+        q: task.content,
         target: 'es'
       })
       .pipe(
         map((res: any) => {
-          return res.data.translations[0].translatedText;
+          const translatedTask = {
+            ...task,
+            translatedContent: res.data.translations[0].translatedText
+          };
+          return translatedTask;
         })
       );
   }

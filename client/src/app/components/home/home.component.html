@@ -25,6 +25,6 @@
       <button routerLink="/login">Log in</button>
       <button routerLink="/register">Sign up</button>
     </div>
-    <button routerLink="/admin">Admin</button>
+    <button routerLink="/admin" *ngIf="this.isAdmin">Admin</button>
   </mat-card>
 </div>

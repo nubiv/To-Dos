@@ -33,9 +33,9 @@
       </div>
 
       <div class="taskList" *ngIf="onSpanish">
-        <ul *ngFor="let task of translatedTaskList">
+        <ul *ngFor="let task of taskList">
           <li id="{{ task.id }}" fxLayout="row">
-            <span>{{ task.content }}</span>
+            <span>{{ task.translatedContent }}</span>
             <input
               type="checkbox"
               [(ngModel)]="task.status"
