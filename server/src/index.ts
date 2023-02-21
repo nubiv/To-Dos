@@ -20,7 +20,7 @@ app.use(
 );
 // enable CORS
 const corsOptions = {
-  origin: 'http://localhost:4200'
+  origin: 'http://localhost:80'
 };
 app.use(cors<Request>(corsOptions));
 

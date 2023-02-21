@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  client:
+    restart: always
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+    # don't overwrite node_modules folder
+      - /app/node_modules
+    # map files in local to container app folder
+      - ./client:/app
+
+  api:
+    restart: always
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_HOST: postgres
+      POSTGRES_DATABASE: postgres
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_PORT: 5432
+
+  db:
+    restart: always
+    image: postgres:14.1-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_password
+
+  nginx:
+    restart: always 
+    build: 
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3000:80'
