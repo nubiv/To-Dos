@@ -1,8 +1,9 @@
-import express, { Request, Response, NextFunction } from 'express';
+import * as express from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { json, urlencoded } from 'body-parser';
 import { sequelize } from './models/index';
-import cors from 'cors';
-import dotenv from 'dotenv';
+import * as cors from 'cors';
+import * as dotenv from 'dotenv';
 import router from './routes/index';
 
 dotenv.config();
