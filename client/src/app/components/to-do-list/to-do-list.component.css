@@ -7,8 +7,8 @@ mat-grid-tile {
 }
 
 mat-card-content {
-  height: 250px;
-  width: 250px;
+  height: 90%;
+  width: 90%;
   overflow: scroll;
 }
 
@@ -17,7 +17,8 @@ mat-form-field {
 }
 
 .task-status {
-  width: 120px;
+  font-size: 15px;
+  width: 100px;
 }
 
 .to-do-tile {

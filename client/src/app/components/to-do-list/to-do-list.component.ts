@@ -72,9 +72,9 @@ export class ToDoListComponent {
   }
 
   onDeleteTask(event: Event) {
-    const target = event.target as HTMLButtonElement;
-    const div = target.parentElement?.parentElement as HTMLDivElement;
-    const taskId = parseInt(div.id);
+    const target = event.target as HTMLSpanElement;
+    const button = target.parentElement as HTMLButtonElement;
+    const taskId = parseInt(button.id);
 
     this.store.dispatch(deleteTaskSubmitted({ taskId }));
   }

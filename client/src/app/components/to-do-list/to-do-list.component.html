@@ -9,141 +9,167 @@
 </div>
 
 <mat-grid-list cols="3" rowHeight="1:1" gutterSize="16px">
-  <mat-grid-tile class="to-do-tile" fxLayout="column">
-    <mat-card fxLayout="column" fxLayoutAlign="center center">
-      <mat-card-header fxLayout="column" fxLayoutAlign="center center">
-        <mat-card-title class="to-do-title">To Do</mat-card-title>
-      </mat-card-header>
+  <mat-grid-tile class="to-do-tile">
+    <div fxLayout="column" fxFlexAlign="flex-start">
+      <div fxFlexOrder="1">
+        <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+          <mat-card-title class="to-do-title">To Do</mat-card-title>
+        </mat-card-header>
+      </div>
 
-      <mat-card-content>
-        <mat-list>
-          <mat-list-item *ngFor="let task of taskList | taskFilter : 'TO DO'">
-            <div
-              fxLayout="row"
-              id="{{ task.id }}"
-              fxLayoutAlign="space-between center"
-            >
-              <span *ngIf="!onSpanish">
-                {{ task.content }}
-              </span>
-              <span *ngIf="onSpanish">
-                {{ task.translatedContent }}
-              </span>
-              <span>
-                {{ task.id }}
-              </span>
-              <mat-form-field appearance="outline" class="task-status">
-                <mat-label>Status</mat-label>
-                <mat-select
-                  id="{{ task.id }}"
-                  (selectionChange)="this.onEditTask($event)"
-                >
-                  <mat-option value="IN PROGRESS">In Progress</mat-option>
-                  <mat-option value="DONE">Done</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <button
-                mat-raised-button
-                color="warn"
-                (click)="this.onDeleteTask($event)"
+      <div
+        fxFlexOrder="2"
+        fxFlex="75"
+        fxFlexLayout="column wrap"
+        fxFlexLayoutGap="8px"
+      >
+        <mat-card>
+          <mat-card-content>
+            <mat-list>
+              <mat-list-item
+                class="to-do-item"
+                *ngFor="let task of taskList | taskFilter : 'TO DO'"
               >
-                Delete
-              </button>
-            </div>
-          </mat-list-item>
-        </mat-list>
-      </mat-card-content>
-    </mat-card>
+                <div fxLayout="row" fxLayoutAlign="flex-start center">
+                  <span *ngIf="!onSpanish">
+                    {{ task.content }}
+                  </span>
+                  <span *ngIf="onSpanish">
+                    {{ task.translatedContent }}
+                  </span>
+                  <mat-form-field appearance="outline" class="task-status">
+                    <mat-label>Status</mat-label>
+                    <mat-select
+                      id="{{ task.id }}"
+                      (selectionChange)="this.onEditTask($event)"
+                    >
+                      <mat-option value="IN PROGRESS">In Progress</mat-option>
+                      <mat-option value="DONE">Done</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button
+                    mat-raised-button
+                    id="{{ task.id }}"
+                    color="warn"
+                    (click)="this.onDeleteTask($event)"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
   </mat-grid-tile>
 
   <mat-grid-tile class="in-progress-tile">
-    <mat-card>
-      <mat-card-header fxLayout="row" fxLayoutAlign="center center">
-        <mat-card-title class="in-progress-title">In Progress</mat-card-title>
-      </mat-card-header>
+    <div fxLayout="column" fxFlexAlign="flex-start">
+      <div fxFlexOrder="1">
+        <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+          <mat-card-title class="in-progress-title">In Progress</mat-card-title>
+        </mat-card-header>
+      </div>
 
-      <mat-card-content>
-        <mat-list>
-          <mat-list-item
-            *ngFor="let task of taskList | taskFilter : 'IN PROGRESS'"
-          >
-            <div
-              fxLayout="row"
-              id="{{ task.id }}"
-              fxLayoutAlign="space-between center"
-            >
-              <span *ngIf="!onSpanish">
-                {{ task.content }}
-              </span>
-              <span *ngIf="onSpanish">
-                {{ task.translatedContent }}
-              </span>
-              <mat-form-field appearance="outline" class="task-status">
-                <mat-label>Status</mat-label>
-                <mat-select
-                  id="{{ task.id }}"
-                  (selectionChange)="this.onEditTask($event)"
-                >
-                  <mat-option value="TO DO">To Do</mat-option>
-                  <mat-option value="DONE">Done</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <button
-                mat-raised-button
-                color="warn"
-                (click)="this.onDeleteTask($event)"
+      <div
+        fxFlexOrder="2"
+        fxFlex="75"
+        fxFlexLayout="column wrap"
+        fxFlexLayoutGap="8px"
+      >
+        <mat-card>
+          <mat-card-content>
+            <mat-list>
+              <mat-list-item
+                *ngFor="let task of taskList | taskFilter : 'IN PROGRESS'"
               >
-                Delete
-              </button>
-            </div>
-          </mat-list-item>
-        </mat-list>
-      </mat-card-content>
-    </mat-card>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <span *ngIf="!onSpanish">
+                    {{ task.content }}
+                  </span>
+                  <span *ngIf="onSpanish">
+                    {{ task.translatedContent }}
+                  </span>
+                  <mat-form-field appearance="outline" class="task-status">
+                    <mat-label>Status</mat-label>
+                    <mat-select
+                      id="{{ task.id }}"
+                      (selectionChange)="this.onEditTask($event)"
+                    >
+                      <mat-option value="TO DO">To Do</mat-option>
+                      <mat-option value="DONE">Done</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button
+                    mat-raised-button
+                    id="{{ task.id }}"
+                    color="warn"
+                    (click)="this.onDeleteTask($event)"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
   </mat-grid-tile>
 
   <mat-grid-tile class="done-tile">
-    <mat-card>
-      <mat-card-header fxLayout="row" fxLayoutAlign="center center">
-        <mat-card-title class="done-title">Done</mat-card-title>
-      </mat-card-header>
+    <div fxLayout="column" fxFlexAlign="flex-start">
+      <div fxFlexOrder="1">
+        <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+          <mat-card-title class="done-title">Done</mat-card-title>
+        </mat-card-header>
+      </div>
 
-      <mat-card-content>
-        <mat-list>
-          <mat-list-item *ngFor="let task of taskList | taskFilter : 'DONE'">
-            <div
-              fxLayout="row"
-              id="{{ task.id }}"
-              fxLayoutAlign="space-between center"
-            >
-              <span *ngIf="!onSpanish">
-                {{ task.content }}
-              </span>
-              <span *ngIf="onSpanish">
-                {{ task.translatedContent }}
-              </span>
-              <mat-form-field appearance="outline" class="task-status">
-                <mat-label>Status</mat-label>
-                <mat-select
-                  id="{{ task.id }}"
-                  (selectionChange)="this.onEditTask($event)"
-                >
-                  <mat-option value="TO DO">To Do</mat-option>
-                  <mat-option value="IN PROGRESS">In Progress</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <button
-                mat-raised-button
-                color="warn"
-                (click)="this.onDeleteTask($event)"
+      <div
+        fxFlexOrder="2"
+        fxFlex="75"
+        fxFlexLayout="column wrap"
+        fxFlexLayoutGap="8px"
+      >
+        <mat-card>
+          <mat-card-content>
+            <mat-list>
+              <mat-list-item
+                *ngFor="let task of taskList | taskFilter : 'DONE'"
               >
-                Delete
-              </button>
-            </div>
-          </mat-list-item>
-        </mat-list>
-      </mat-card-content>
-    </mat-card>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <span *ngIf="!onSpanish">
+                    {{ task.content }}
+                  </span>
+                  <span *ngIf="onSpanish">
+                    {{ task.translatedContent }}
+                  </span>
+                  <mat-form-field appearance="outline" class="task-status">
+                    <mat-label>Status</mat-label>
+                    <mat-select
+                      id="{{ task.id }}"
+                      (selectionChange)="this.onEditTask($event)"
+                    >
+                      <mat-option value="TO DO">To Do</mat-option>
+                      <mat-option value="IN PROGRESS">In Progress</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button
+                    mat-raised-button
+                    id="{{ task.id }}"
+                    color="warn"
+                    (click)="this.onDeleteTask($event)"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
   </mat-grid-tile>
 </mat-grid-list>
 
