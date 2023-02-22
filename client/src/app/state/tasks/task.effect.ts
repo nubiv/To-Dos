@@ -48,7 +48,7 @@ export class TasksEffect {
     )
   );
 
-  addNewTaskContent$ = createEffect(() =>
+  addNewTaskTranslatedContent$ = createEffect(() =>
     this.actions$.pipe(
       ofType('[To Do List Component] Add New Task Success'),
       map((props: any) => ({
@@ -64,11 +64,11 @@ export class TasksEffect {
   editTask$ = createEffect(() =>
     this.actions$.pipe(
       ofType('[To Do List Component] Edit Task Submitted'),
-      mergeMap((task: Task) =>
-        this.tasksService.editTask(task).pipe(
-          map((task) => ({
+      mergeMap((props: any) =>
+        this.tasksService.editTask(props.task).pipe(
+          map((updatedTask) => ({
             type: '[To Do List Component] Edit Task Success',
-            payload: task
+            payload: updatedTask
           })),
           catchError(() =>
             of({ type: '[To Do List Component] Edit Task Failed' })
@@ -98,50 +98,19 @@ export class TasksEffect {
   injectTranslatedContent$ = createEffect(() =>
     this.actions$.pipe(
       ofType('[To Do List Component] Inject Translated Content Initiated'),
-      mergeMap(
-        (props: any) =>
-          this.translateService.translate(props.task).pipe(
-            map((data) => ({
-              type: '[To Do List Component] Inject Translated Content Success',
-              payload: data
-            })),
-            catchError((err) =>
-              of({
-                type: '[To Do List Component] Inject Translated Content Failed',
-                err: err
-              })
-            )
+      mergeMap((props: any) =>
+        this.translateService.translate(props.task).pipe(
+          map((data) => ({
+            type: '[To Do List Component] Inject Translated Content Success',
+            payload: data
+          })),
+          catchError((err) =>
+            of({
+              type: '[To Do List Component] Inject Translated Content Failed',
+              err: err
+            })
           )
-        // this.tasksService.getTaskList().pipe(
-        //   concatMap((data: any) =>
-        //     data.map((task: Task) => {
-        //       this.translateService
-        //         .translate(task.content)
-        //         .subscribe((result) => {
-        //           const translatedTask = {
-        //             ...task,
-        //             translatedTask: result
-        //           };
-        //           console.log(translatedTask);
-        //           return translatedTask;
-        //         });
-        //     })
-        //   ),
-        //   (data) => {
-        //     console.log(data);
-        //     return data;
-        //   },
-        //   map((data) => ({
-        //     type: '[To Do List Component] Inject Translated Tasks Success',
-        //     payload: data
-        //   })),
-        //   catchError((err) =>
-        //     of({
-        //       type: '[To Do List Component] Inject Translated Tasks Failed',
-        //       err: err
-        //     })
-        //   )
-        // )
+        )
       )
     )
   );

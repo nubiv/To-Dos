@@ -11,7 +11,6 @@ export const fetchAllUsers = async (req: Request, res: Response) => {
 export const updateUserAuthorization = async (req: Request, res: Response) => {
   const userId = req.params.userId;
   const { isAdmin } = req.body;
-  console.log(isAdmin);
 
   await admin.auth().setCustomUserClaims(userId, { isAdmin: isAdmin });
 

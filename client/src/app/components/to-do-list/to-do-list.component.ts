@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { TranslateService } from '../../services/translate.service';
 import { TasksService } from 'src/app/services/tasks.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { Task } from 'src/app/models';
-import { map } from 'rxjs/operators';
-import { pipe } from 'rxjs';
+import { STATUS, Task } from 'src/app/models';
 import {
   loadTaskListInitiated,
   addNewTaskSubmitted,
@@ -38,63 +36,51 @@ export class ToDoListComponent {
     this.taskList$.subscribe((state) => (this.taskList = state));
   }
 
-  onAddTask(taskContent: string) {
+  onAddTask(taskContent: string, taskStatus: STATUS) {
+    if (!taskContent || !taskStatus) {
+      window.alert('Please fill in the content or status.');
+      return;
+    }
+
     if (taskContent) {
       const task: Task = {
         content: taskContent,
-        status: 'TO DO'
+        status: taskStatus
       };
 
       this.store.dispatch(addNewTaskSubmitted({ task }));
-      // this.tasksService.addNewTask(task).subscribe((result) => {
-      //   window.alert("Task added successfully.");
-      //   console.log(result);
-      //   taskContent = "";
-      // });
     }
   }
 
-  onChecked(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const li = target.parentElement as HTMLLIElement;
-    const taskId = parseInt(li.id);
+  onEditTask(event: any) {
+    const target = event.source._elementRef.nativeElement as HTMLSelectElement;
+    const taskId = parseInt(target.id);
+    const status = event.value;
 
-    // this.tasksService.editTask(taskId).subscribe(() => {
-    //   window.alert("Task updated.");
-    // });
-    // this.store.dispatch(editTaskSubmitted());
+    const task = this.taskList.find((task) => task.id === taskId);
+    if (!task) return;
+    const updatedTask: Task = {
+      id: task.id,
+      content: task.content,
+      status: status
+    };
+
+    this.store.dispatch(editTaskSubmitted({ task: updatedTask }));
+
+    // really bad way to force page displaying updated task list...
+    window.location.reload();
   }
 
   onDeleteTask(event: Event) {
-    const target = event.target as HTMLButtonElement;
-    const li = target.parentElement as HTMLLIElement;
-    const taskId = parseInt(li.id);
+    const target = event.target as HTMLSpanElement;
+    const button = target.parentElement as HTMLButtonElement;
+    const taskId = parseInt(button.id);
 
-    // this.tasksService.deleteTask(taskId).subscribe(() => {
-    //   window.alert("Task deleted.");
-    // });
     this.store.dispatch(deleteTaskSubmitted({ taskId }));
   }
 
   onSwitchToSP() {
     this.onSpanish = true;
-
-    // this.tasksService
-    //   .getTaskList()
-    //   .pipe(
-    //     map((tasks: any) => {
-    //       tasks.map((task: Task) =>
-    //         this.translateService
-    //           .translate(task.content)
-    //           .subscribe((result) => (task.content = result))
-    //       );
-
-    //       return tasks;
-    //     })
-    //   )
-    //   .subscribe(
-    //     (translatedTasks) => (this.translatedTaskList = translatedTasks)
-    //   );
 
     // only allow to translate the entire task list once
     if (this.tranlatable) {

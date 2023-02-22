@@ -31,7 +31,7 @@ export const addNewTaskFailed = createAction(
 );
 
 export const editTaskSubmitted = createAction(
-  '[To Do List Component] Edit Task Submmitted',
+  '[To Do List Component] Edit Task Submitted',
   props<{ task: Task }>()
 );
 

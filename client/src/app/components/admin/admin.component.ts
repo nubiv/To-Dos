@@ -20,14 +20,25 @@ export class AdminComponent {
       .subscribe((data: any) => (this.userList = data.users));
   }
 
-  onUpdateUserAuthorization(event: Event, isAdmin: boolean) {
-    const target = event.target as HTMLInputElement;
-    const li = target.parentElement as HTMLLIElement;
-    const userId = li.id;
+  onUpdateUserAuthorization(event: any, isAdmin: boolean) {
+    const target = event.target.parentElement as HTMLButtonElement;
+    const userId = target.id;
 
-    this.adminService
-      .updateUserAuthorization(userId, isAdmin)
-      .subscribe(() => 'updated');
+    this.adminService.updateUserAuthorization(userId, isAdmin).subscribe(
+      () => {
+        if (isAdmin) {
+          window.alert('User promoted.');
+        } else {
+          window.alert('User demoted.');
+        }
+      },
+      (err) => {
+        window.alert(
+          'Something went wrong while modifying user authorization.'
+        );
+        console.log(err);
+      }
+    );
   }
 
   onDeleteUser(event: Event) {
@@ -35,8 +46,12 @@ export class AdminComponent {
     const li = target.parentElement as HTMLLIElement;
     const userId = li.id;
 
-    this.adminService
-      .deleteUser(userId)
-      .subscribe(() => console.log('deleted.'));
+    this.adminService.deleteUser(userId).subscribe(
+      () => window.alert('User deleted.'),
+      (err) => {
+        window.alert('Something went wrong while deleting user.');
+        console.log(err);
+      }
+    );
   }
 }
