@@ -36,6 +36,7 @@ import { EffectsModule } from "@ngrx/effects";
 import { TasksEffect } from "./state/tasks";
 import { reducers, metaReducers } from "./state";
 import { AdminComponent } from './components/admin/admin.component';
+import { TaskFilterPipe } from './pipes/task-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { AdminComponent } from './components/admin/admin.component';
     HomeComponent,
     ForgotPasswordComponent,
     VerifyEmailComponent,
-    AdminComponent
+    AdminComponent,
+    TaskFilterPipe
   ],
   imports: [
     BrowserModule,

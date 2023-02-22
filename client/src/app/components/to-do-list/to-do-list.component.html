@@ -1,70 +1,190 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center center">
-  <mat-card class="box">
-    <mat-card-header
-      *ngIf="authService.userData as user"
-      fxLayout="row"
-      fxLayoutAlign="center center"
-    >
-      <mat-card-title>{{ user.email }}</mat-card-title>
-    </mat-card-header>
+  <mat-card-header
+    *ngIf="authService.userData as user"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+  >
+    <mat-card-title>Hi, {{ user.displayName }}</mat-card-title>
+  </mat-card-header>
+</div>
 
-    <div fxLayout="row" fxLayoutAlign="center center">
-      <label>New Task</label>
-      <input #taskContent type="text" placeholder="Enter a new task" />
-      <button (click)="onAddTask(taskContent.value)" [disabled]="!taskContent">
-        Add
-      </button>
-    </div>
+<mat-grid-list cols="3" rowHeight="1:1" gutterSize="16px">
+  <mat-grid-tile class="to-do-tile" fxLayout="column">
+    <mat-card fxLayout="column" fxLayoutAlign="center center">
+      <mat-card-header fxLayout="column" fxLayoutAlign="center center">
+        <mat-card-title class="to-do-title">To Do</mat-card-title>
+      </mat-card-header>
 
-    <div class="task-container">
-      <div class="taskList" *ngIf="!onSpanish">
-        <ul *ngFor="let task of taskList">
-          <li id="{{ task.id }}" fxLayout="row">
-            <span>{{ task.content }}</span>
-            <input
-              type="checkbox"
-              [(ngModel)]="task.status"
-              (change)="onChecked($event)"
-            />
-            DONE
-            <button (click)="onDeleteTask($event)">Delete</button>
-          </li>
-        </ul>
-      </div>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let task of taskList | taskFilter : 'TO DO'">
+            <div
+              fxLayout="row"
+              id="{{ task.id }}"
+              fxLayoutAlign="space-between center"
+            >
+              <span *ngIf="!onSpanish">
+                {{ task.content }}
+              </span>
+              <span *ngIf="onSpanish">
+                {{ task.translatedContent }}
+              </span>
+              <span>
+                {{ task.id }}
+              </span>
+              <mat-form-field appearance="outline" class="task-status">
+                <mat-label>Status</mat-label>
+                <mat-select
+                  id="{{ task.id }}"
+                  (selectionChange)="this.onEditTask($event)"
+                >
+                  <mat-option value="IN PROGRESS">In Progress</mat-option>
+                  <mat-option value="DONE">Done</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button
+                mat-raised-button
+                color="warn"
+                (click)="this.onDeleteTask($event)"
+              >
+                Delete
+              </button>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
 
-      <div class="taskList" *ngIf="onSpanish">
-        <ul *ngFor="let task of taskList">
-          <li id="{{ task.id }}" fxLayout="row">
-            <span>{{ task.translatedContent }}</span>
-            <input
-              type="checkbox"
-              [(ngModel)]="task.status"
-              (change)="onChecked($event)"
-            />
-            HECHO
-            <button (click)="onDeleteTask($event)">Delete</button>
-          </li>
-        </ul>
-      </div>
-    </div>
+  <mat-grid-tile class="in-progress-tile">
+    <mat-card>
+      <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+        <mat-card-title class="in-progress-title">In Progress</mat-card-title>
+      </mat-card-header>
 
-    <div *ngIf="!onSpanish" fxLayout="row" fxLayoutAlign="center center">
-      <button (click)="onSwitchToSP()">Translate to Espanol!</button>
-    </div>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item
+            *ngFor="let task of taskList | taskFilter : 'IN PROGRESS'"
+          >
+            <div
+              fxLayout="row"
+              id="{{ task.id }}"
+              fxLayoutAlign="space-between center"
+            >
+              <span *ngIf="!onSpanish">
+                {{ task.content }}
+              </span>
+              <span *ngIf="onSpanish">
+                {{ task.translatedContent }}
+              </span>
+              <mat-form-field appearance="outline" class="task-status">
+                <mat-label>Status</mat-label>
+                <mat-select
+                  id="{{ task.id }}"
+                  (selectionChange)="this.onEditTask($event)"
+                >
+                  <mat-option value="TO DO">To Do</mat-option>
+                  <mat-option value="DONE">Done</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button
+                mat-raised-button
+                color="warn"
+                (click)="this.onDeleteTask($event)"
+              >
+                Delete
+              </button>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
 
-    <div *ngIf="onSpanish" fxLayout="row" fxLayoutAlign="center center">
-      <button (click)="onSwitchToEN()">Back to English!</button>
-    </div>
+  <mat-grid-tile class="done-tile">
+    <mat-card>
+      <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+        <mat-card-title class="done-title">Done</mat-card-title>
+      </mat-card-header>
 
-    <div fxLayout="row" fxLayoutAlign="center center">
-      <button
-        (click)="authService.signOut()"
-        fxLayout="row"
-        fxLayoutAlign="center center"
-      >
-        Sign out
-      </button>
-      <button routerLink="/home">Home</button>
-    </div>
-  </mat-card>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let task of taskList | taskFilter : 'DONE'">
+            <div
+              fxLayout="row"
+              id="{{ task.id }}"
+              fxLayoutAlign="space-between center"
+            >
+              <span *ngIf="!onSpanish">
+                {{ task.content }}
+              </span>
+              <span *ngIf="onSpanish">
+                {{ task.translatedContent }}
+              </span>
+              <mat-form-field appearance="outline" class="task-status">
+                <mat-label>Status</mat-label>
+                <mat-select
+                  id="{{ task.id }}"
+                  (selectionChange)="this.onEditTask($event)"
+                >
+                  <mat-option value="TO DO">To Do</mat-option>
+                  <mat-option value="IN PROGRESS">In Progress</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button
+                mat-raised-button
+                color="warn"
+                (click)="this.onDeleteTask($event)"
+              >
+                Delete
+              </button>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<div class="add-task-container" fxLayout="row" fxLayoutAlign="center center">
+  <mat-form-field appearance="fill" class="add-task-field">
+    <input matInput #taskContent placeholder="New task" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" class="task-status">
+    <mat-label>Status</mat-label>
+    <mat-select #taskStatus>
+      <mat-option value="TO DO">To Do</mat-option>
+      <mat-option value="IN PROGRESS">In Progress</mat-option>
+      <mat-option value="DONE">Done</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button
+    mat-raised-button
+    (click)="this.onAddTask(taskContent.value, taskStatus.value)"
+  >
+    Add
+  </button>
+</div>
+
+<div *ngIf="!onSpanish" fxLayout="row" fxLayoutAlign="center center">
+  <button mat-raised-button (click)="onSwitchToSP()">
+    Translate to Espanol!
+  </button>
+</div>
+
+<div *ngIf="onSpanish" fxLayout="row" fxLayoutAlign="center center">
+  <button mat-raised-button (click)="onSwitchToEN()">Back to English!</button>
+</div>
+
+<div fxLayout="row" fxLayoutAlign="center center">
+  <button
+    mat-raised-button
+    (click)="authService.signOut()"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+  >
+    Sign out
+  </button>
+  <button mat-raised-button routerLink="/home">Home</button>
 </div>

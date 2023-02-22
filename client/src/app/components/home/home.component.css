@@ -45,3 +45,7 @@ img {
   height: 75%;
   width: 75%;
 }
+
+button {
+  margin: 8px;
+}

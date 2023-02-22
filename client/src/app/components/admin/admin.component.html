@@ -5,16 +5,8 @@
       fxLayout="row"
       fxLayoutAlign="center center"
     >
-      <mat-card-title>{{ user.email }}</mat-card-title>
+      <mat-card-title>Hi, {{ user.displayName }}</mat-card-title>
     </mat-card-header>
-
-    <!-- <div fxLayout="row" fxLayoutAlign="center center">
-      <label>New Task</label>
-      <input #taskContent type="text" placeholder="Enter a new task" />
-      <button (click)="onAddTask(taskContent.value)" [disabled]="!taskContent">
-        Add
-      </button>
-    </div> -->
 
     <div class="task-container">
       <div class="taskList">
@@ -22,50 +14,42 @@
           <li id="{{ user.uid }}" fxLayout="row">
             <span>{{ user.displayName }}- </span>
             <span>{{ user.email }}- </span>
-            <!-- <input
-              type="checkbox"
-              [(ngModel)]="user.isAdmin"
-              (change)="onUpdateUserAuthorization($event, user.isAdmin)"
-            />
-            Admin? -->
-            <button (click)="onDeleteUser($event)">Delete</button>
+            <mat-form-field appearance="outline" class="task-status">
+              <mat-label>Status</mat-label>
+              <mat-select #isAdmin>
+                <mat-option value="true">Admin</mat-option>
+                <mat-option value="false">Regular</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button
+              id="{{ user.uid }}"
+              color="primary"
+              mat-raised-button
+              (click)="this.onUpdateUserAuthorization($event, isAdmin.value)"
+            >
+              Save
+            </button>
+            <button
+              color="warn"
+              mat-raised-button
+              (click)="this.onDeleteUser($event)"
+            >
+              Delete
+            </button>
           </li>
         </ul>
       </div>
-
-      <!-- <div class="taskList" *ngIf="onSpanish">
-        <ul *ngFor="let task of translatedTaskList">
-          <li id="{{ task.id }}" fxLayout="row">
-            <span>{{ task.content }}</span>
-            <input
-              type="checkbox"
-              [(ngModel)]="task.status"
-              (change)="onChecked($event)"
-            />
-            HECHO
-            <button (click)="onDeleteTask($event)">Delete</button>
-          </li>
-        </ul>
-      </div>
-    </div> -->
-
-      <!-- <div *ngIf="!onSpanish" fxLayout="row" fxLayoutAlign="center center">
-      <button (click)="onSwitchToSP()">Translate to Espanol!</button>
-    </div>
-
-    <div *ngIf="onSpanish" fxLayout="row" fxLayoutAlign="center center">
-      <button (click)="onSwitchToEN()">Back to English!</button>
-    </div> -->
 
       <div fxLayout="row" fxLayoutAlign="center center">
         <button
+          mat-raised-button
           (click)="authService.signOut()"
           fxLayout="row"
           fxLayoutAlign="center center"
         >
           Sign out
         </button>
-        <button routerLink="/home">Home</button>
+        <button mat-raised-button routerLink="/home">Home</button>
       </div>
     </div>
   </mat-card>

@@ -39,13 +39,7 @@ export class TasksService {
   editTask(task: Task) {
     const user = JSON.parse(localStorage.getItem('user')!);
 
-    const updatedTask = {
-      content: task.content,
-      status: task.status,
-      updatedAt: task.updatedAt
-    };
-
-    return this.http.patch(`/api/${user.uid}/tasks/${task.id}`, updatedTask, {
+    return this.http.patch(`/api/${user.uid}/tasks/${task.id}`, task, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }

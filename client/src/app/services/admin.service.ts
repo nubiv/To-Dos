@@ -20,7 +20,7 @@ export class AdminService {
 
   updateUserAuthorization(userId: string, isAdmin: boolean) {
     const data = { isAdmin: isAdmin };
-    console.log(isAdmin);
+
     return this.http.patch(`/api/admin/users/${userId}`, data, {
       headers: {
         Authorization: `Bearer ${this.token}`

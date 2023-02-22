@@ -27,8 +27,14 @@ const tasksReducer = createReducer(
     return [...state];
   }),
   on(TaskAction.editTaskSuccess, (state, action) => {
-    window.alert('Successfully edited task.');
-    return [...state];
+    if (action.payload) {
+      const updatedState = state.map((task) =>
+        task.id === action.payload.id ? action.payload : task
+      );
+      return [...updatedState];
+    } else {
+      return [...state];
+    }
   }),
   on(TaskAction.editTaskFailed, (state, action) => {
     console.log(action.err);
