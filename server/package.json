@@ -2,10 +2,9 @@
   "name": "to-dos-server",
   "version": "1.0.0",
   "description": "To-dos server",
-  "main": "./dist/src/index.js",
   "scripts": {
     "dev": "npx nodemon --watch",
-    "build": "tsc ./src/index.ts",
+    "build": "tsc",
     "prettier-format": "prettier --config .prettierrc './src/**' --write",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
