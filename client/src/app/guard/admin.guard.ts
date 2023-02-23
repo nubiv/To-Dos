@@ -26,7 +26,7 @@ export class AdminGuard implements CanActivate {
     this.authService.afAuth.currentUser.then((user) => {
       user?.getIdTokenResult().then((data) => {
         const isAdmin = data.claims['isAdmin'];
-        if (!isAdmin) {
+        if (isAdmin !== true) {
           this.router.navigate(['home']);
         }
       });
