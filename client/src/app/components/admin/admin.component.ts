@@ -11,7 +11,7 @@ export class AdminComponent {
   userList: any = [];
   constructor(
     public authService: AuthService,
-    private adminService: AdminService
+    public adminService: AdminService
   ) {}
 
   ngOnInit(): void {
@@ -26,11 +26,7 @@ export class AdminComponent {
 
     this.adminService.updateUserAuthorization(userId, isAdmin).subscribe(
       () => {
-        if (isAdmin) {
-          window.alert('User promoted.');
-        } else {
-          window.alert('User demoted.');
-        }
+        window.alert('User authorization state updated.');
       },
       (err) => {
         window.alert(

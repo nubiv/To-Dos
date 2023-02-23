@@ -12,7 +12,11 @@ export const updateUserAuthorization = async (req: Request, res: Response) => {
   const userId = req.params.userId;
   const { isAdmin } = req.body;
 
-  await admin.auth().setCustomUserClaims(userId, { isAdmin: isAdmin });
+  if (isAdmin === 'true') {
+    await admin.auth().setCustomUserClaims(userId, { isAdmin: true });
+  } else {
+    await admin.auth().setCustomUserClaims(userId, { isAdmin: null });
+  }
 
   return isAdmin
     ? res.send({ message: 'Successfully promoted.' })
