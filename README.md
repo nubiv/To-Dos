@@ -10,9 +10,9 @@ This is a full-stack web application for managing your to-do list with a transla
 * The backend is built using [Express.js](https://expressjs.com/) web framework, and is using [Typescript Lang](https://www.typescriptlang.org/) for writing the app's logic. 
 * For Database - Data is stored in [PostgreSQL](https://www.postgresql.org) using [Sequelize](https://sequelize.org) as the Object Relational Mapping (ORM).
 * For Authentication - [Firebase Authentication](https://firebase.google.com/docs/auth) is used for user authentication and authentication-related tasks. The authentication process can be divided into three steps:
-1. Firebase authentication in the frontend. After authentication, firebase will send back a user object withholding the JWT token.
-2. Then we can use that JWT token to send API requests to our backend.
-3. Then the backend can use that JWT token to verify the user from firebase, if the user is validated, we can send data to the frontend otherwise we can ignore the request received from the frontend.
+    1. Firebase authentication in the frontend. After authentication, firebase will send back a user object withholding the JWT token.
+    2. Then we can use that JWT token to send API requests to our backend.
+    3. Then the backend can use that JWT token to verify the user from firebase, if the user is validated, we can send data to the frontend otherwise we can ignore the request received from the frontend.
 * For translation feature - [Google Translation API](https://cloud.google.com/translate/docs/) is used to build translation feature.
 
 # Contents
@@ -186,7 +186,8 @@ git clone https://github.com/horus2121/To-Dos.git;
 cd to-dos;
 ```
 
-Backend:
+## Backend:
+
 ```bash
 # Go to the server folder.
 cd server;
@@ -215,11 +216,18 @@ After downloading Service Account Key, go to next step:
 # Edit your db.config file(username, password...) using any editor of your choice.
 vim ./src/config/db.config.ts
 
+# Note: corsOptions in index.ts is used for enabling CORS, the target currently is configured as PORT 4200, you should make proper change to this configuration whenever the client running PORT changes
+const corsOptions = {
+  origin: 'http://localhost:4200'
+};
+app.use(cors<Request>(corsOptions));
+
 # Run the server
 # Note: the server is running on PORT 8000, or you can config it in .env file under server directory
 npm run dev;
 ```
-Frontend:
+## Frontend:
+
 ```bash
 # Go to the client folder.
 cd client;
@@ -255,7 +263,7 @@ export const environment = {
   }
 };
 
-# proxy.conf.json is used for enabling CORS, the target currently is configured as PORT 8000, you should make proper change to this configuration whenever the server running PORT changes
+# Note: proxy.conf.json is used for enabling CORS, the target currently is configured as PORT 8000, you should make proper change to this configuration whenever the server running PORT changes
 vim ./src/env/proxy.conf.json
 
 # Run the client
