@@ -1,45 +1,51 @@
 .container {
-    margin-top: 50px;
-    font-size: 1rem;
-    height: 50%;
+  margin-top: 50px;
+  font-size: 1rem;
+  height: 50%;
 }
 
 .container .btn {
-    width: 75%;
-    font-size: 1rem;
-    font-style: italic;
-    padding: 10px;
-    background: #3F51B5;
-    color: white;
-    border-radius: 5px;
+  width: 75%;
+  font-size: 1rem;
+  font-style: italic;
+  padding: 10px;
+  background: #3f51b5;
+  color: white;
+  border-radius: 5px;
 }
 
-.forgotPassword, .redirect {
-    font-style: italic;
-    color: #3F51B5;
-    font-weight: bold;
+.forgotPassword,
+.redirect {
+  font-style: italic;
+  color: #3f51b5;
+  font-weight: bold;
 }
-.forgotPassword:hover, .redirect:hover {
-    text-decoration-line: underline;
-    cursor: pointer;
+.forgotPassword:hover,
+.redirect:hover {
+  text-decoration-line: underline;
+  cursor: pointer;
 }
 .container .btn {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .container mat-card-header {
-    width: 100%;
-    display: block;
-    font-weight: 700;
-    color: #3F51B5;
-    font-style: italic;
+  width: 100%;
+  display: block;
+  font-weight: 700;
+  color: #3f51b5;
+  font-style: italic;
 }
 .container mat-card-header mat-card-title {
-    font-size: 2.5rem;
-    margin: 0;
-} 
+  font-size: 2.5rem;
+  margin: 0;
+}
 
 img {
-    height: 75%;
-    width: 75%;
+  height: 75%;
+  width: 75%;
+}
+
+button {
+  margin: 8px;
 }

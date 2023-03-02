@@ -1,0 +1,11 @@
+serviceAccountKey.json
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log

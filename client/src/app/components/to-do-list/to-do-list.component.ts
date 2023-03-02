@@ -1,9 +1,17 @@
 import { Component } from '@angular/core';
 import { TranslateService } from '../../services/translate.service';
-import { TaskActionService } from 'src/app/services/task-action.service';
+import { TasksService } from 'src/app/services/tasks.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { Task } from 'src/app/services/task';
-import { map } from 'rxjs/operators';
+import { STATUS, Task } from 'src/app/models';
+import {
+  loadTaskListInitiated,
+  addNewTaskSubmitted,
+  selectTaskList,
+  deleteTaskSubmitted,
+  editTaskSubmitted,
+  injectTranslatedContentInitiated
+} from 'src/app/state/tasks';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-to-do-list',
@@ -11,104 +19,83 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./to-do-list.component.css']
 })
 export class ToDoListComponent {
-  taskContent: string = '';
+  taskList$ = this.store.select(selectTaskList);
   taskList: Task[] = [];
-  translatedTaskList: Task[] = [];
   onSpanish = false;
+  tranlatable = true;
 
   constructor(
     public translateService: TranslateService,
     public authService: AuthService,
-    public taskAction: TaskActionService
-  ) { }
+    public tasksService: TasksService,
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
-    this.onShow()
-   }
-
-  onShow() {
-    this.taskAction.GetAllTasks().subscribe(docs => this.taskList = docs);
+    this.store.dispatch(loadTaskListInitiated());
+    this.taskList$.subscribe((state) => (this.taskList = state));
   }
 
-  onChangeInput(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const value: string = target.value;
-
-    this.taskContent = value;
-  }
-
-  onAddTask() {
-    if (this.taskContent) {
-    const task = {
-      content: this.taskContent,
-      done: false
+  onAddTask(taskContent: string, taskStatus: STATUS) {
+    if (!taskContent || !taskStatus) {
+      window.alert('Please fill in the content or status.');
+      return;
     }
 
-    this.taskAction
-    .CreateTask(task)
-    .then((result) => {
-      window.alert('Task added successfully.')
-      this.taskContent = ''
+    if (taskContent) {
+      const task: Task = {
+        content: taskContent,
+        status: taskStatus
+      };
 
-      this.taskAction.AddUID(result.id)
-      .catch((error) => {
-        window.alert(error)
-      })
-    })
-    .catch((error) => {
-      window.alert(error)
-    })
+      this.store.dispatch(addNewTaskSubmitted({ task }));
     }
   }
 
-  onChecked(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const li = target.parentElement?.parentElement as HTMLLIElement;
-    const taskUid = li.className
+  onEditTask(event: any) {
+    const target = event.source._elementRef.nativeElement as HTMLSelectElement;
+    const taskId = parseInt(target.id);
+    const status = event.value;
 
-    this.taskAction
-    .EditTask(taskUid)
-    .then(() => {
-      window.alert('Task updated.')
-    })
-    .catch((error) => {
-      window.alert(error)
-    })
+    const task = this.taskList.find((task) => task.id === taskId);
+    if (!task) return;
+    const updatedTask: Task = {
+      id: task.id,
+      content: task.content,
+      status: status
+    };
+
+    this.store.dispatch(editTaskSubmitted({ task: updatedTask }));
+
+    // really bad way to force page displaying updated task list...
+    window.location.reload();
   }
 
   onDeleteTask(event: Event) {
-    const target = event.target as HTMLButtonElement;
-    const li = target.parentElement as HTMLLIElement;
-    const taskUid = li.className
+    const target = event.target as HTMLSpanElement;
+    const button = target.parentElement as HTMLButtonElement;
+    const taskId = parseInt(button.id);
 
-    this.taskAction
-    .DeleteTask(taskUid)
-    .then(() => {
-      window.alert('Task deleted.')
-    })
-    .catch((error) => {
-      window.alert(error)
-    })
+    this.store.dispatch(deleteTaskSubmitted({ taskId }));
   }
 
   onSwitchToSP() {
     this.onSpanish = true;
 
-    this.taskAction
-    .GetAllTasks()
-    .pipe(
-      map(tasks=> {
-        tasks.map(task=> 
-          this.translateService.translate(task.content).subscribe(result=> task.content=result))
-
-        return tasks
-      })
-    )
-    .subscribe(translatedTasks => this.translatedTaskList = translatedTasks)
+    // only allow to translate the entire task list once
+    if (this.tranlatable) {
+      this.taskList.forEach((task: Task) => {
+        this.store.dispatch(
+          injectTranslatedContentInitiated({
+            task: task
+          })
+        );
+      });
+      this.tranlatable = false;
+    }
   }
 
   onSwitchToEN() {
     this.onSpanish = false;
-    this.translatedTaskList = [];
   }
 }

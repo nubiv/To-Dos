@@ -1,0 +1,29 @@
+name: Google Cloud Run Deployment
+on:
+  push:
+    branches:
+      - main
+env:
+  PROJECT_ID: my-to-dos-378409
+  RUN_REGION: australia-southeast1
+  SA_KEY_JSON: ${{ secrets.GCP }}
+jobs:
+  deploy:
+    name: Deploy to Cloud Run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # Setup gcloud CLI
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@v1
+        with:
+          version: ">= 363.0.0"
+          service_account_key: ${{ secrets.GCR }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      # Build and push image to Google Container Registry
+      - name: Build
+        run: gcloud builds submit --tag gcr.io/$PROJECT_ID/$PROJECT_ID:$GITHUB_SHA # GITHUB_SHA refers to commit id
+
+      - name: Deploy
+        run: gcloud run deploy $PROJECT_ID --image gcr.io/$PROJECT_ID/$PROJECT_ID:$GITHUB_SHA --platform managed --region $RUN_REGION

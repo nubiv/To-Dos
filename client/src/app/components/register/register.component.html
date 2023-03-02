@@ -1,36 +1,66 @@
-  <div class="register-container" fxLayout="row" fxLayoutAlign="center center">
-    <mat-card class="box">
+<div class="register-container" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+    <mat-card-header fxLayout="row" fxLayoutAlign="center center">
+      <mat-card-title>Sign up</mat-card-title>
+    </mat-card-header>
 
-      <mat-card-header fxLayout="row" fxLayoutAlign="center center">
-        <mat-card-title>Sign up</mat-card-title>
-      </mat-card-header>
+    <div class="register-form" fxLayout="row" fxLayoutAlign="center center">
+      <mat-card-content>
+        <mat-form-field class="register-form-field">
+          <input
+            matInput
+            type="text"
+            class="formControl"
+            placeholder="displayName"
+            #displayName
+            required
+          />
+        </mat-form-field>
 
-      <div class="register-form" fxLayout="row" fxLayoutAlign="center center">
-        <mat-card-content>
-          <mat-form-field class="register-form-field">
-            <input matInput type="email" class="formControl" placeholder="Email Address" #userEmail required />
-          </mat-form-field>
+        <mat-form-field class="register-form-field">
+          <input
+            matInput
+            type="email"
+            class="formControl"
+            placeholder="Email Address"
+            #userEmail
+            required
+          />
+        </mat-form-field>
 
-          <mat-form-field class="register-form-field">
-            <input matInput type="password" class="formControl" placeholder="Password" #userPwd required />
-          </mat-form-field>
-        </mat-card-content>
-      </div>
+        <mat-form-field class="register-form-field">
+          <input
+            matInput
+            type="password"
+            class="formControl"
+            placeholder="Password"
+            #userPwd
+            required
+          />
+        </mat-form-field>
+      </mat-card-content>
+    </div>
 
-      <div class="formGroup" fxLayout="row" fxLayoutAlign="center center">
-          <input type="button" class="btn btnPrimary" value="Sign Up" (click)="authService.SignUp(userEmail.value, userPwd.value)" />
-        </div>
+    <div class="formGroup" fxLayout="row" fxLayoutAlign="center center">
+      <input
+        type="button"
+        class="btn btnPrimary"
+        value="Sign Up"
+        (click)="
+          authService.signUp(userEmail.value, userPwd.value, displayName.value)
+        "
+      />
+    </div>
 
-      <div class="formGroup" fxLayout="row" fxLayoutAlign="center center">
-          <span class="or"><span class="orInner">Or</span></span>
-        </div>
+    <div class="formGroup" fxLayout="row" fxLayoutAlign="center center">
+      <span class="or"><span class="orInner">Or</span></span>
+    </div>
 
-      <div class="redirectToLogin" fxLayout="row" fxLayoutAlign="center center">
-        <span
-          >Already have an account?
-          <span class="redirect" routerLink="/login">Log In</span></span
-        >
-      </div>
-
-    </mat-card>
-  </div>
+    <div class="redirectToLogin" fxLayout="row" fxLayoutAlign="center center">
+      <span
+        >Already have an account?
+        <span class="redirect" routerLink="/login">Log In</span></span
+      >
+    </div>
+  </mat-card>
+</div>

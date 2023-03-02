@@ -1,0 +1,59 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+    <mat-card-header
+      *ngIf="authService.userData as user"
+      fxLayout="row"
+      fxLayoutAlign="center center"
+    >
+      <mat-card-title>Hi, {{ user.displayName }}</mat-card-title>
+    </mat-card-header>
+
+    <div class="task-container">
+      <div class="taskList">
+        <ul *ngFor="let user of userList">
+          <li id="{{ user.uid }}" fxLayout="row wrap">
+            <span>Username: {{ user.displayName }} </span>
+            <span>Email: {{ user.email }} </span>
+
+            <div fxLayoutAlign="right">
+              <mat-form-field appearance="outline" class="user-auth">
+                <mat-label>Status</mat-label>
+                <mat-select #isAdmin>
+                  <mat-option value="true">Admin</mat-option>
+                  <mat-option value="false">Regular</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button
+                id="{{ user.uid }}"
+                color="primary"
+                mat-raised-button
+                (click)="this.onUpdateUserAuthorization($event, isAdmin.value)"
+              >
+                Save
+              </button>
+              <button
+                color="warn"
+                mat-raised-button
+                (click)="this.onDeleteUser($event)"
+              >
+                Delete
+              </button>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <button
+          mat-raised-button
+          (click)="authService.signOut()"
+          fxLayout="row"
+          fxLayoutAlign="center center"
+        >
+          Sign out
+        </button>
+        <button mat-raised-button routerLink="/home">Home</button>
+      </div>
+    </div>
+  </mat-card>
+</div>
