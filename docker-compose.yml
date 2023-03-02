@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  client:
+    build: 
+      context: ./client
+    # volumes:
+    # # don't overwrite node_modules folder
+    #   - /app/node_modules
+    # # map files in local to container app folder
+    #   - ./client:/app
+
+  api:
+    build: 
+      context: ./server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    depends_on:
+      - db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_HOST: postgres
+      POSTGRES_DATABASE: postgres
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_PORT: 5432
+    links:
+      - db
+
+  db:
+    image: postgres:14.1-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_password
+
+  nginx:
+    restart: always 
+    depends_on:
+      - client
+      - api
+    build: 
+      context: ./nginx
+    ports:
+      - '3000:80'
+    links:
+      - client
+      - api

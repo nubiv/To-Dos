@@ -20,7 +20,7 @@ app.use(
 );
 // enable CORS
 const corsOptions = {
-  origin: 'http://localhost:4200'
+  origin: 'http://localhost:80'
 };
 app.use(cors<Request>(corsOptions));
 
@@ -42,6 +42,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({ message: err.message });
 });
 
-app.listen(port, () => {
+app.listen(process.env.PORT, () => {
   console.log(`[server]: Server is running at port: ${port}...`);
 });

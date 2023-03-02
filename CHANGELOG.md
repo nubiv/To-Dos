@@ -3,7 +3,7 @@
 ## [1.0.0] - 2023-02-23
 
 ### Added
-- Update CHANGELOG.md [`7665323`](https://github.com/horus2121/To-Dos/commit/7665323e66a04a7738f868af096014ed073d4b31)
+- Update CHANGELOG.md [`3fcb9e0`](https://github.com/horus2121/To-Dos/commit/3fcb9e05b77b3fbc2896e7462ae549624818a2cb)
 - Update README.md [`7665323`](https://github.com/horus2121/To-Dos/commit/7665323e66a04a7738f868af096014ed073d4b31)
 
 ### Fixed
