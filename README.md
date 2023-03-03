@@ -14,6 +14,7 @@ This is a full-stack web application for managing your to-do list with a transla
     2. Then we can use that JWT token to send API requests to our backend.
     3. Then the backend can use that JWT token to verify the user from firebase, if the user is validated, we can send data to the frontend otherwise we can ignore the request received from the frontend.
 * For translation feature - [Google Translation API](https://cloud.google.com/translate/docs/) is used to build translation feature.
+* Live Demo - [My-to-dos](https://app-xoqbundyrq-ts.a.run.app) is now hosted on [Google Cloud Run]() and integrated with [Cloud SQL](https://cloud.google.com/sql/docs/postgres/features) as the database.
 
 # Contents
 
@@ -66,67 +67,30 @@ Backend:
 │   │   ├── app
 │   │   │   ├── angular-material.module.ts
 │   │   │   ├── app-routing.module.ts
-│   │   │   ├── app.component.css
 │   │   │   ├── app.component.html
-│   │   │   ├── app.component.spec.ts
 │   │   │   ├── app.component.ts
 │   │   │   ├── app.module.ts
 │   │   │   ├── components
 │   │   │   │   ├── admin
-│   │   │   │   │   ├── admin.component.css
-│   │   │   │   │   ├── admin.component.html
-│   │   │   │   │   ├── admin.component.spec.ts
-│   │   │   │   │   └── admin.component.ts
 │   │   │   │   ├── forgot-password
-│   │   │   │   │   ├── forgot-password.component.css
-│   │   │   │   │   ├── forgot-password.component.html
-│   │   │   │   │   ├── forgot-password.component.spec.ts
-│   │   │   │   │   └── forgot-password.component.ts
 │   │   │   │   ├── home
-│   │   │   │   │   ├── home.component.css
-│   │   │   │   │   ├── home.component.html
-│   │   │   │   │   ├── home.component.spec.ts
-│   │   │   │   │   └── home.component.ts
 │   │   │   │   ├── login
-│   │   │   │   │   ├── login.component.css
-│   │   │   │   │   ├── login.component.html
-│   │   │   │   │   ├── login.component.spec.ts
-│   │   │   │   │   └── login.component.ts
 │   │   │   │   ├── register
-│   │   │   │   │   ├── register.component.css
-│   │   │   │   │   ├── register.component.html
-│   │   │   │   │   ├── register.component.spec.ts
-│   │   │   │   │   └── register.component.ts
 │   │   │   │   ├── to-do-list
-│   │   │   │   │   ├── to-do-list.component.css
-│   │   │   │   │   ├── to-do-list.component.html
-│   │   │   │   │   ├── to-do-list.component.spec.ts
-│   │   │   │   │   └── to-do-list.component.ts
 │   │   │   │   └── verify-email
-│   │   │   │       ├── verify-email.component.css
-│   │   │   │       ├── verify-email.component.html
-│   │   │   │       ├── verify-email.component.spec.ts
-│   │   │   │       └── verify-email.component.ts
 │   │   │   ├── guard
-│   │   │   │   ├── admin.guard.spec.ts
 │   │   │   │   ├── admin.guard.ts
-│   │   │   │   ├── auth.guard.spec.ts
 │   │   │   │   └── auth.guard.ts
 │   │   │   ├── models
 │   │   │   │   ├── index.ts
 │   │   │   │   ├── task.interface.ts
 │   │   │   │   └── user.interface.ts
 │   │   │   ├── pipes
-│   │   │   │   ├── task-filter.pipe.spec.ts
 │   │   │   │   └── task-filter.pipe.ts
 │   │   │   ├── services
-│   │   │   │   ├── admin.service.spec.ts
 │   │   │   │   ├── admin.service.ts
-│   │   │   │   ├── auth.service.spec.ts
 │   │   │   │   ├── auth.service.ts
-│   │   │   │   ├── tasks.service.spec.ts
 │   │   │   │   ├── tasks.service.ts
-│   │   │   │   ├── translate.service.spec.ts
 │   │   │   │   └── translate.service.ts
 │   │   │   └── state
 │   │   │       ├── core.reducer.ts
