@@ -31,10 +31,7 @@ jobs:
       - name: Build Docker Image
         run: docker build -t $IMAGE_NAME:$GITHUB_SHA . 
         
-      # - name: Configure Docker Client
-      #   run:  gcloud auth configure-docker --quiet # Authenticate to GCR
-        
-      - name: Push Docker Image to Container Registry GCR
+      - name: Push Docker Image to Google Container Registry 
         run: |-
           docker tag $IMAGE_NAME:$GITHUB_SHA gcr.io/$PROJECT_ID/$IMAGE_NAME:$GITHUB_SHA 
           docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:$GITHUB_SHA 
