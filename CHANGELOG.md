@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.0.0] - 2023-03-03
+
+### Added
+- Add automated testing workflow [`ce99e4`](https://github.com/horus2121/To-Dos/commit/ce99e42c358064514f935744fc97fcb6487f4174)
+
 ## [1.0.0] - 2023-03-02
 
 ### Added
