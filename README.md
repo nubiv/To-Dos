@@ -15,6 +15,7 @@ This is a full-stack web application for managing your to-do list with a transla
     3. Then the backend can use that JWT token to verify the user from firebase, if the user is validated, we can send data to the frontend otherwise we can ignore the request received from the frontend.
 * For translation feature - [Google Translation API](https://cloud.google.com/translate/docs/) is used to build translation feature.
 * Live Demo - [My-to-dos](https://app-xoqbundyrq-ts.a.run.app) is now hosted on [Google Cloud Run](https://cloud.google.com/run) and integrated with [Cloud SQL](https://cloud.google.com/sql/docs/postgres/features) as the database.
+* CI/CD - By utilizing [GitHub Action](https://docs.github.com/en/actions), automated testing will be performed on each pull request, the docker image will be built and then deployed to [Google Cloud Run](https://cloud.google.com/run) on each successful push to main branch. 
 
 # Contents
 
@@ -22,6 +23,7 @@ This is a full-stack web application for managing your to-do list with a transla
 * [App Structure](#app-structure)
 * [Install, Configure & Run](#install-configure--run)
 * [List of Routes](#list-of-routes)
+* [Deployment](#deployment)
 
 # Dependencies
 
@@ -269,3 +271,7 @@ ng serve;
   DELETE | /api/admin/users/:userId
 +--------+-------------------------+
 ```
+
+# Deployment
+
+[My-To-Dos GCR Deployment](https://horus21.atlassian.net/l/cp/1NmbgcEw) describes how to deploy the application to GCR step by step.
