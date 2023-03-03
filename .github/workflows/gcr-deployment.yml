@@ -33,7 +33,7 @@ jobs:
 
       # Docker requires privileged access to interact with registries, this is the step to authenticate docker to access GCR
       - name: Authenticate Docker 
-        run:  gcloud auth configure-docker gcr.io/$PROJECT_ID --quiet 
+        run:  gcloud auth configure-docker --quiet 
         
       - name: Push Docker Image to Google Container Registry 
         run: |-
