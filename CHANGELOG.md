@@ -3,6 +3,7 @@
 ## [1.0.0] - 2023-03-03
 
 ### Added
+- Add deployment document link to README.md [`2a9aa9`](https://github.com/horus2121/To-Dos/commit/2a9aa9494fac46af0a94b25e04a902582b06adf2)
 - Add automated testing workflow [`ce99e4`](https://github.com/horus2121/To-Dos/commit/ce99e42c358064514f935744fc97fcb6487f4174)
 
 ## [1.0.0] - 2023-03-02
