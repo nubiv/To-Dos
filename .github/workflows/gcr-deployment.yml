@@ -7,23 +7,32 @@ env:
   PROJECT_ID: my-to-dos-378409
   RUN_REGION: australia-southeast1
   SA_KEY_JSON: ${{ secrets.GCP }}
+  IMAGE_NAME: my-to-dos
+  SERVICE: my-to-dos
 jobs:
   deploy:
     name: Deploy to Cloud Run
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3 
 
-      # Setup gcloud CLI
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@v1
+      - name: Setup gcloud CLI
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@v1
         with:
           version: ">= 363.0.0"
           service_account_key: ${{ secrets.GCR }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
-      # Build and push image to Google Container Registry
-      - name: Build
-        run: gcloud builds submit --tag gcr.io/$PROJECT_ID/$PROJECT_ID:$GITHUB_SHA # GITHUB_SHA refers to commit id
+      - name: Build Docker Image
+        run: docker build -t $IMAGE_NAME:$GITHUB_SHA . 
+        
+      # - name: Configure Docker Client
+      #   run:  gcloud auth configure-docker --quiet # Authenticate to GCR
+        
+      - name: Push Docker Image to Container Registry GCR
+        run: |-
+          docker tag $IMAGE_NAME:$GITHUB_SHA gcr.io/$PROJECT_ID/$IMAGE_NAME:$GITHUB_SHA 
+          docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:$GITHUB_SHA 
 
       - name: Deploy
         run: gcloud run deploy $PROJECT_ID --image gcr.io/$PROJECT_ID/$PROJECT_ID:$GITHUB_SHA --platform managed --region $RUN_REGION

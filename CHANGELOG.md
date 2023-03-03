@@ -1,6 +1,6 @@
 # Change Log
 
-## [1.0.0] - 2023-02-23
+## [1.0.0] - 2023-03-02
 
 ### Added
 - Add Dockerfile for containerizing, add necessary config to fit in google cloud environment [`7008f5`](https://github.com/horus2121/To-Dos/commit/7008f57710dbd2362d5ffb59b6eb9915fefb909b)
