@@ -3,6 +3,7 @@
 ## [1.0.0] - 2023-03-04
 
 ### Added
+- Enable public access to GCR hosted url [`ff85de`](https://github.com/horus2121/To-Dos/commit/ff85de6c561338df311a87062435a3d120ff5730)
 - Authenticate docker to access GCR in gcr-deployment workflow [`27bb5e`](https://github.com/horus2121/To-Dos/commit/27bb5e778ca453d0789779678a67d4d7215fff1b)
 - Set firebase service account key as GCR secret, update server side firebase config [`0b1bea`](https://github.com/horus2121/To-Dos/commit/0b1bea0af8e1907773c7ff423e4a91ffee915e18)
 
