@@ -6,7 +6,7 @@ on:
 env:
   PROJECT_ID: my-to-dos-378409
   RUN_REGION: australia-southeast1
-  SA_KEY_JSON: ${{ secrets.GCP }}
+  SA_KEY_JSON: ${{ secrets.GCP_SA_KEY }}
   IMAGE_NAME: my-to-dos
   SERVICE: my-to-dos
 jobs:
@@ -16,12 +16,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3 
 
+      - name: GCP authentication
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ env.SA_KEY_JSON }}'
+
       - name: Setup gcloud CLI
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@v1
         with:
           version: ">= 363.0.0"
-          service_account_key: ${{ secrets.GCR }}
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          project_id: ${{ env.PROJECT_ID }}
 
       - name: Build Docker Image
         run: docker build -t $IMAGE_NAME:$GITHUB_SHA . 
