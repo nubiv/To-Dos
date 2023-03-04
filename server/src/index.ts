@@ -24,9 +24,9 @@ const corsOptions = {
 };
 app.use(cors<Request>(corsOptions));
 
-// connect to postsql and sync database, set force: ture to allow drop existing tables and re-sync database
+// connect to postsql and sync database, set sync force: ture to allow drop existing tables and re-sync database on every time server restart
 sequelize
-  .sync({ force: true })
+  .sync({ force: false })
   .then(() => {
     console.log('Synced db.');
   })
