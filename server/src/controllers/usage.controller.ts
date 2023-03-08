@@ -4,6 +4,10 @@ import { Usage } from '../models/usage.model';
 export const getTotalCount: RequestHandler = async (req, res, next) => {
   const userId = req.params.userId;
 
+  Usage.findOne({ where: { userId: userId } })
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err));
+
   Usage.findOrCreate({ where: { userId: userId } })
     .then((data) => {
       res.send(data[0]);

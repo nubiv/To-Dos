@@ -22,6 +22,7 @@ export const Task = sequelize.define<Task>(
     // Model attributes are defined here
     id: {
       primaryKey: true,
+      autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED
     },
     content: {

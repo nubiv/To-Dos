@@ -10,15 +10,39 @@ export class UsageService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  countAddTask() {
-    const user = JSON.parse(localStorage.getItem('user')!);
-
-    return this.http.get(`/api/${user.uid}/tasks`, {
+  getHistoryUsage(userId: string) {
+    return this.http.get(`/api/admin/usages/${userId}`, {
       headers: {
         Authorization: `Bearer ${this.token}`
       }
     });
   }
 
-  countTranslate() {}
+  countAddTask() {
+    const user = JSON.parse(localStorage.getItem('user')!);
+
+    return this.http.patch(
+      `/api/admin/usages/${user.uid}/add-task`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${this.token}`
+        }
+      }
+    );
+  }
+
+  countTranslate() {
+    const user = JSON.parse(localStorage.getItem('user')!);
+
+    return this.http.patch(
+      `/api/admin/usages/${user.uid}/translate`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${this.token}`
+        }
+      }
+    );
+  }
 }

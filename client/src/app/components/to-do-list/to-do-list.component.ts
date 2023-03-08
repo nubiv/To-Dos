@@ -12,6 +12,7 @@ import {
   injectTranslatedContentInitiated
 } from 'src/app/state/tasks';
 import { Store } from '@ngrx/store';
+import { UsageService } from 'src/app/services/usage.service';
 
 @Component({
   selector: 'app-to-do-list',
@@ -28,6 +29,7 @@ export class ToDoListComponent {
     public translateService: TranslateService,
     public authService: AuthService,
     public tasksService: TasksService,
+    public usageService: UsageService,
     private store: Store
   ) {}
 
@@ -67,7 +69,7 @@ export class ToDoListComponent {
 
     this.store.dispatch(editTaskSubmitted({ task: updatedTask }));
 
-    // really bad way to force page displaying updated task list...
+    // force page displaying updated task list, looking for more rational approach
     window.location.reload();
   }
 
@@ -93,6 +95,16 @@ export class ToDoListComponent {
       });
       this.tranlatable = false;
     }
+
+    this.usageService.countTranslate().subscribe({
+      next: (data) => {
+        console.log('Count translation usage + 1');
+        console.log(data);
+      },
+      error: (err) => {
+        console.log('Count translation usage failed.', err);
+      }
+    });
   }
 
   onSwitchToEN() {

@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, mergeMap, catchError, tap } from 'rxjs/operators';
 import { Task } from 'src/app/models';
 import { TasksService } from 'src/app/services/tasks.service';
 import { TranslateService } from 'src/app/services/translate.service';
+import { UsageService } from 'src/app/services/usage.service';
 
 @Injectable()
 export class TasksEffect {
   constructor(
     private actions$: Actions,
     private tasksService: TasksService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private usageService: UsageService
   ) {}
 
   loadTaskList$ = createEffect(() =>
@@ -51,6 +53,17 @@ export class TasksEffect {
   addNewTaskTranslatedContent$ = createEffect(() =>
     this.actions$.pipe(
       ofType('[To Do List Component] Add New Task Success'),
+      tap(() => {
+        this.usageService.countAddTask().subscribe({
+          next: (data) => {
+            console.log('Count adding task + 1');
+            console.log(data);
+          },
+          error: (err) => {
+            console.log('Count adding task failed.', err);
+          }
+        });
+      }),
       map((props: any) => ({
         type: '[To Do List Component] Inject Translated Content Initiated',
         task: props.payload
