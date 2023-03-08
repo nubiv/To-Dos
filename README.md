@@ -274,4 +274,4 @@ ng serve;
 
 # Deployment
 
-This Confluence document [My-To-Dos GCR Deployment](https://horus21.atlassian.net/l/cp/1NmbgcEw) describes how to deploy the application to GCR step by step.
+This Confluence document [My-To-Dos GCR Deployment](https://horus21.atlassian.net/l/cp/BDniLT06) describes how to deploy the application to GCR step by step.

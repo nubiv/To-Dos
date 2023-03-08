@@ -8,10 +8,14 @@ import { checkIfAdmin } from '../middlewares';
 
 const adminsRouter = Router();
 
-adminsRouter.get('/api/admin/users', fetchAllUsers);
+adminsRouter.get('/api/admin/users', checkIfAdmin, fetchAllUsers);
 
-adminsRouter.patch('/api/admin/users/:userId', updateUserAuthorization);
+adminsRouter.patch(
+  '/api/admin/users/:userId',
+  checkIfAdmin,
+  updateUserAuthorization
+);
 
-adminsRouter.delete('/api/admin/users/:userId', deleteUser);
+adminsRouter.delete('/api/admin/users/:userId', checkIfAdmin, deleteUser);
 
 export default adminsRouter;
