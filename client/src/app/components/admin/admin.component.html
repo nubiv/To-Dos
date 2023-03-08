@@ -27,6 +27,14 @@
                 id="{{ user.uid }}"
                 color="primary"
                 mat-raised-button
+                (click)="this.onGetHistoryUsage($event)"
+              >
+                History Usage
+              </button>
+              <button
+                id="{{ user.uid }}"
+                color="primary"
+                mat-raised-button
                 (click)="this.onUpdateUserAuthorization($event, isAdmin.value)"
               >
                 Save

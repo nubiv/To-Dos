@@ -1,7 +1,7 @@
 import admin from 'firebase-admin';
-// import serviceAccount from './serviceAccountKey.json';
+import serviceAccount from './serviceAccountKey.json';
 
-const serviceAccount = JSON.parse(process.env.FIREBASE_SA_KEY as string);
+// const serviceAccount = JSON.parse(process.env.FIREBASE_SA_KEY as string);
 
 const params = {
   type: serviceAccount.type,
