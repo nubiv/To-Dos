@@ -22,8 +22,8 @@ export class UsageService {
     const user = JSON.parse(localStorage.getItem('user')!);
 
     return this.http.patch(
-      `/api/admin/usages/${user.uid}/add-task`,
-      {},
+      `/api/usages/add-task`,
+      { userId: user.uid },
       {
         headers: {
           Authorization: `Bearer ${this.token}`
@@ -36,8 +36,8 @@ export class UsageService {
     const user = JSON.parse(localStorage.getItem('user')!);
 
     return this.http.patch(
-      `/api/admin/usages/${user.uid}/translate`,
-      {},
+      `/api/usages/translate`,
+      { userId: user.uid },
       {
         headers: {
           Authorization: `Bearer ${this.token}`

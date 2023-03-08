@@ -25,7 +25,7 @@ export const increaseTranslateTotalCount: RequestHandler = async (
   res,
   next
 ) => {
-  const userId = req.params.userId;
+  const userId = req.body.userId;
   const usage = await Usage.findOne({ where: { userId: userId } });
 
   if (!usage) {
@@ -68,7 +68,7 @@ export const increaseAddTaskTotalCount: RequestHandler = async (
   res,
   next
 ) => {
-  const userId = req.params.userId;
+  const userId = req.body.userId;
   const usage = await Usage.findOne({ where: { userId: userId } });
 
   if (!usage) {

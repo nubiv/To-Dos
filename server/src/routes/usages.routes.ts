@@ -11,13 +11,13 @@ const usagesRouter = Router();
 usagesRouter.get('/api/admin/usages/:userId', checkIfAdmin, getTotalCount);
 
 usagesRouter.patch(
-  '/api/admin/usages/:userId/translate',
+  '/api/usages/translate',
   checkIfAuthenticated,
   increaseTranslateTotalCount
 );
 
 usagesRouter.patch(
-  '/api/admin/usages/:userId/add-task',
+  '/api/usages/add-task',
   checkIfAuthenticated,
   increaseAddTaskTotalCount
 );
