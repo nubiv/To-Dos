@@ -1,10 +1,29 @@
-import { DataTypes } from 'sequelize';
+import {
+  CreationOptional,
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model
+} from 'sequelize';
 import { sequelize } from '.';
 
-export const Task = sequelize.define(
+interface Task
+  extends Model<InferAttributes<Task>, InferCreationAttributes<Task>> {
+  // Some fields are optional when calling UserModel.create() or UserModel.build()
+  id: CreationOptional<number>;
+  content: string;
+  status: string;
+  userId: string;
+}
+
+export const Task = sequelize.define<Task>(
   'Task',
   {
     // Model attributes are defined here
+    id: {
+      primaryKey: true,
+      type: DataTypes.INTEGER.UNSIGNED
+    },
     content: {
       type: DataTypes.STRING,
       allowNull: false
