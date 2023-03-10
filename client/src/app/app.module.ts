@@ -36,6 +36,8 @@ import { TasksEffect } from './state/tasks';
 import { reducers, metaReducers } from './state';
 import { AdminComponent } from './components/admin/admin.component';
 import { TaskFilterPipe } from './pipes/task-filter.pipe';
+import { TaskDisplayCardComponent } from './components/task-display-card/task-display-card.component';
+import { TaskDisplayTileComponent } from './components/task-display-tile/task-display-tile.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { TaskFilterPipe } from './pipes/task-filter.pipe';
     ForgotPasswordComponent,
     VerifyEmailComponent,
     AdminComponent,
-    TaskFilterPipe
+    TaskFilterPipe,
+    TaskDisplayCardComponent,
+    TaskDisplayTileComponent
   ],
   imports: [
     BrowserModule,
