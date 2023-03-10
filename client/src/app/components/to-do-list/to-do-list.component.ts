@@ -12,6 +12,8 @@ import {
   injectTranslatedContentInitiated
 } from 'src/app/state/tasks';
 import { Store } from '@ngrx/store';
+import { UsageService } from 'src/app/services/usage.service';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-to-do-list',
@@ -23,11 +25,29 @@ export class ToDoListComponent {
   taskList: Task[] = [];
   onSpanish = false;
   tranlatable = true;
+  tileCategory = {
+    toDo: {
+      title: 'TO DO' as STATUS,
+      filter: 'TO DO' as STATUS,
+      statusOptions: ['IN PROGRESS', 'DONE']
+    },
+    inProgress: {
+      title: 'IN PROGRESS' as STATUS,
+      filter: 'IN PROGRESS' as STATUS,
+      statusOptions: ['TO DO', 'DONE']
+    },
+    done: {
+      title: 'DONE' as STATUS,
+      filter: 'DONE' as STATUS,
+      statusOptions: ['TO DO', 'IN PROGRESS']
+    }
+  };
 
   constructor(
     public translateService: TranslateService,
     public authService: AuthService,
     public tasksService: TasksService,
+    public usageService: UsageService,
     private store: Store
   ) {}
 
@@ -52,7 +72,7 @@ export class ToDoListComponent {
     }
   }
 
-  onEditTask(event: any) {
+  onEditTask(event: MatSelectChange) {
     const target = event.source._elementRef.nativeElement as HTMLSelectElement;
     const taskId = parseInt(target.id);
     const status = event.value;
@@ -67,7 +87,7 @@ export class ToDoListComponent {
 
     this.store.dispatch(editTaskSubmitted({ task: updatedTask }));
 
-    // really bad way to force page displaying updated task list...
+    // force page displaying updated task list, looking for more rational approach
     window.location.reload();
   }
 
@@ -93,6 +113,16 @@ export class ToDoListComponent {
       });
       this.tranlatable = false;
     }
+
+    this.usageService.countTranslate().subscribe({
+      next: (data) => {
+        console.log('Count translation usage + 1');
+        console.log(data);
+      },
+      error: (err) => {
+        console.log('Count translation usage failed.', err);
+      }
+    });
   }
 
   onSwitchToEN() {

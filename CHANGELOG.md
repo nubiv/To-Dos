@@ -1,5 +1,15 @@
 # Change Log
 
+## [1.0.0] - 2023-03-08
+
+### Added
+- Set usage related functions in frontend, user history of usage will be displayed in console after hitting the button [`74c7722`](https://github.com/horus2121/To-Dos/commit/74c7722d0af28d1b76dcd189d57cfbfce24b9526)
+- Type sequelize models [`fa2e592`](https://github.com/horus2121/To-Dos/commit/fa2e592e28adb25e804cae8ec23309d85db503d4)
+- Add usage api routes and test 'em using postman [`847fadc`](https://github.com/horus2121/To-Dos/commit/847fadc6115b6a4f8870ad29f3527a2edfbda80e)
+
+### Fixed
+- Slight change to usage api routes, dispatch userId in body instead of as param [`65c3d6f`](https://github.com/horus2121/To-Dos/commit/65c3d6f1c10b82018f299966a5d89834c811cbe7)
+
 ## [1.0.0] - 2023-03-04
 
 ### Added

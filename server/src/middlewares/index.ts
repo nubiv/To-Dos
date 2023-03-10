@@ -15,7 +15,6 @@ export const checkIfAuthenticated = async (
     const userInfo = await admin.auth().verifyIdToken(token);
 
     if (userInfo) {
-      console.log(userInfo);
       return next();
     }
 
@@ -39,7 +38,6 @@ export const checkIfAdmin = async (
     const userInfo = await admin.auth().verifyIdToken(token);
 
     if (userInfo.isAdmin) {
-      console.log(userInfo);
       return next();
     }
 

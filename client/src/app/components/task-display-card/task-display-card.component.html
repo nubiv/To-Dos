@@ -1,0 +1,37 @@
+<mat-card style="width: 100%; margin: 5px">
+  <mat-card-content *ngIf="!onSpanish">
+    {{ task?.content }}
+  </mat-card-content>
+  <mat-card-content *ngIf="onSpanish">
+    {{ task?.translatedContent }}
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <mat-form-field
+      appearance="outline"
+      class="task-status"
+      style="font-size: 14px"
+    >
+      <mat-label>STATUS</mat-label>
+      <mat-select
+        id="{{ task?.id }}"
+        (selectionChange)="this.onEditTask($event)"
+        style="font-size: small; width: 100px"
+      >
+        <mat-option disabled="true">STATUS</mat-option>
+        <div *ngFor="let option of statusOptions">
+          <mat-option value="{{ option }}">{{ option }}</mat-option>
+        </div>
+      </mat-select>
+    </mat-form-field>
+
+    <button
+      mat-button
+      id="{{ task?.id }}"
+      color="warn"
+      (click)="this.onDeleteTask($event)"
+    >
+      Delete
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -6,19 +6,8 @@ mat-grid-tile {
   margin: 8px;
 }
 
-mat-card-content {
-  height: 90%;
-  width: 90%;
-  overflow: scroll;
-}
-
 mat-form-field {
   margin: 8px;
-}
-
-.task-status {
-  font-size: 15px;
-  width: 100px;
 }
 
 .to-do-tile {
@@ -33,16 +22,6 @@ mat-form-field {
   background-color: #e0f2f1;
 }
 
-mat-list-item {
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-
-mat-card-title {
-  font-size: 24px;
-  font-weight: bold;
-}
-
 button {
-  margin: 8px;
+  margin-left: 8px;
 }

@@ -7,17 +7,17 @@ import {
 } from 'sequelize';
 import { sequelize } from '.';
 
-interface Task
-  extends Model<InferAttributes<Task>, InferCreationAttributes<Task>> {
+interface Usage
+  extends Model<InferAttributes<Usage>, InferCreationAttributes<Usage>> {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   id: CreationOptional<number>;
-  content: string;
-  status: string;
+  translateTotalCount: CreationOptional<number>;
+  addTaskTotalCount: CreationOptional<number>;
   userId: string;
 }
 
-export const Task = sequelize.define<Task>(
-  'Task',
+export const Usage = sequelize.define<Usage>(
+  'Usage',
   {
     // Model attributes are defined here
     id: {
@@ -25,12 +25,14 @@ export const Task = sequelize.define<Task>(
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED
     },
-    content: {
-      type: DataTypes.STRING,
+    translateTotalCount: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      defaultValue: 0,
       allowNull: false
     },
-    status: {
-      type: DataTypes.STRING,
+    addTaskTotalCount: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      defaultValue: 0,
       allowNull: false
     },
     userId: {
@@ -43,5 +45,4 @@ export const Task = sequelize.define<Task>(
   }
 );
 
-// `sequelize.define` also returns the model
-console.log(Task === sequelize.models.Task); // true
+console.log(Usage === sequelize.models.Usage); // true

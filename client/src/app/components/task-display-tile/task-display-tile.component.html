@@ -1,0 +1,28 @@
+<div style="width: 90%; height: 90%" fxLayout="column" fxLayoutAlign="start">
+  <mat-card-header style="position: absolute; top: 5px; left: 10px">
+    <mat-card-title
+      class="to-do-title"
+      style="font-size: 24px; font-weight: bold; color: rgb(63, 62, 62)"
+    >
+      {{ tileTitle }}
+    </mat-card-title>
+  </mat-card-header>
+
+  <div style="overflow: scroll; height: 100%; max-height: 400px; width: 100%">
+    <mat-list fxLayout="column" fxLayoutAlign="center">
+      <mat-list-item
+        class="to-do-item"
+        *ngFor="let task of taskList | taskFilter : tileFilter!"
+        style="height: auto"
+      >
+        <app-task-display-card
+          [task]="task"
+          [onSpanish]="onSpanish"
+          [statusOptions]="this.tileStatusOptions"
+          (editTaskEvent)="this.onEditTask($event)"
+          (deleteTaskEvent)="this.onDeleteTask($event)"
+        ></app-task-display-card>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</div>
