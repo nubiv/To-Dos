@@ -1,38 +1,25 @@
-<div class="container" fxLayout="row" fxLayoutAlign="center center">
-  <mat-card>
-    <mat-card-header fxLayout="row" fxLayoutAlign="center center">
-      <mat-card-title>To-Do List</mat-card-title>
-    </mat-card-header>
+<div class="container" fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <img src="assets/4697260.png" alt="" />
+  </div>
 
-    <div fxLayout="row" fxLayoutAlign="center center">
-      <img src="assets/4697260.png" alt="" />
-    </div>
+  <div
+    *ngIf="this.authService.isLoggedIn"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+  >
+    <button mat-raised-button routerLink="/to-do-list">Go To Task Board</button>
+  </div>
 
-    <div
-      *ngIf="this.authService.isLoggedIn"
-      fxLayout="row"
-      fxLayoutAlign="center center"
-    >
-      <button mat-raised-button routerLink="/to-do-list">My TO-DO List</button>
-      <button mat-raised-button (click)="authService.signOut()">
-        Sign out
-      </button>
-    </div>
-
-    <div
-      *ngIf="!this.authService.isLoggedIn"
-      fxLayout="row"
-      fxLayoutAlign="center center"
-    >
-      <button color="primary" mat-raised-button routerLink="/login">
-        Log in
-      </button>
-      <button color="primary" mat-raised-button routerLink="/register">
-        Sign up
-      </button>
-    </div>
-    <div *ngIf="this.isAdmin" fxLayout="row" fxLayoutAlign="center center">
-      <button mat-raised-button routerLink="/admin">Manage Users</button>
-    </div>
-  </mat-card>
+  <div
+    *ngIf="!this.authService.isLoggedIn"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+  >
+    <button mat-raised-button routerLink="/login">Log in</button>
+    <button mat-raised-button routerLink="/register">Sign up</button>
+  </div>
+  <div *ngIf="this.isAdmin" fxLayout="row" fxLayoutAlign="center center">
+    <button mat-raised-button routerLink="/admin">Users Management</button>
+  </div>
 </div>

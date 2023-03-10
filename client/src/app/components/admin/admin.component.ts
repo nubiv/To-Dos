@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsageService } from 'src/app/services/usage.service';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-admin',
@@ -13,7 +14,8 @@ export class AdminComponent {
   constructor(
     public authService: AuthService,
     public adminService: AdminService,
-    public usageService: UsageService
+    public usageService: UsageService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -27,8 +29,14 @@ export class AdminComponent {
     const userId = target.id;
 
     this.usageService.getHistoryUsage(userId).subscribe({
-      next: (data) => {
-        console.log(data);
+      next: (data: any) => {
+        this.dialog.open(AdminUsageDialog, {
+          data: {
+            addTaskTotalCount: data.addTaskTotalCount,
+            translateTotalCount: data.translateTotalCount,
+            lastActivedAt: data.updatedAt
+          }
+        });
       },
       error: (err) => {
         window.alert(
@@ -69,4 +77,16 @@ export class AdminComponent {
       }
     });
   }
+
+  openUsageDialog() {
+    this.dialog.open(AdminUsageDialog);
+  }
+}
+
+@Component({
+  selector: 'admin-usage-dialog',
+  templateUrl: 'admin-usage-dialog.component.html'
+})
+export class AdminUsageDialog {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 }
