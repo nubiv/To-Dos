@@ -38,6 +38,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { TaskFilterPipe } from './pipes/task-filter.pipe';
 import { TaskDisplayCardComponent } from './components/task-display-card/task-display-card.component';
 import { TaskDisplayTileComponent } from './components/task-display-tile/task-display-tile.component';
+import { LayoutComponent } from './components/layout/layout.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { TaskDisplayTileComponent } from './components/task-display-tile/task-di
     AdminComponent,
     TaskFilterPipe,
     TaskDisplayCardComponent,
-    TaskDisplayTileComponent
+    TaskDisplayTileComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,

@@ -1,13 +1,3 @@
-<div class="container" fxLayout="row" fxLayoutAlign="center center">
-  <mat-card-header
-    *ngIf="authService.userData as user"
-    fxLayout="row"
-    fxLayoutAlign="center center"
-  >
-    <mat-card-title>Hi, {{ user.displayName }}</mat-card-title>
-  </mat-card-header>
-</div>
-
 <mat-grid-list cols="3" rowHeight="1:1" gutterSize="16px" style="height: 180px">
   <mat-grid-tile class="to-do-tile" style="height: 180px">
     <app-task-display-tile
@@ -74,16 +64,4 @@
 
 <div *ngIf="onSpanish" fxLayout="row" fxLayoutAlign="center center">
   <button mat-raised-button (click)="onSwitchToEN()">Back to English!</button>
-</div>
-
-<div fxLayout="row" fxLayoutAlign="center center">
-  <button
-    mat-raised-button
-    (click)="authService.signOut()"
-    fxLayout="row"
-    fxLayoutAlign="center center"
-  >
-    Sign out
-  </button>
-  <button mat-raised-button routerLink="/home">Home</button>
 </div>
