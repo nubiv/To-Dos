@@ -1,12 +1,25 @@
 import { TestBed } from '@angular/core/testing';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRippleModule } from '@angular/material/core';
+import { MatTabNavPanel } from '@angular/material/tabs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { environment } from 'src/env/environments';
 import { AppComponent } from './app.component';
+import { LayoutComponent } from './components/layout/layout.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [AppComponent]
+      imports: [
+        RouterTestingModule,
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFirestoreModule,
+        MatButtonModule,
+        MatRippleModule
+      ],
+      declarations: [AppComponent, LayoutComponent, MatTabNavPanel]
     }).compileComponents();
   });
 

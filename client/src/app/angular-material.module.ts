@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const materialModules = [
   CdkTreeModule,
@@ -29,7 +30,8 @@ const materialModules = [
   MatSelectModule,
   MatButtonModule,
   MatTabsModule,
-  MatMenuModule
+  MatMenuModule,
+  MatDialogModule
 ];
 @NgModule({
   imports: [CommonModule, ...materialModules],

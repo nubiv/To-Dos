@@ -9,6 +9,7 @@ import {
 } from '@angular/common/http/testing';
 
 import { AdminComponent } from './admin.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('AdminComponent', () => {
   let component: AdminComponent;
@@ -22,7 +23,8 @@ describe('AdminComponent', () => {
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule,
         HttpClientTestingModule,
-        MatCardModule
+        MatCardModule,
+        MatDialogModule
       ]
     }).compileComponents();
 
