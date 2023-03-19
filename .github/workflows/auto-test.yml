@@ -21,9 +21,11 @@ jobs:
 
 
       - name: Testing Client
-        run: cd client && npm ci
-        run: cd client && npm run test:prod
+        run: |- 
+          cd client && npm ci
+          cd client && npm run test:prod
 
       - name: Testing Server
-        run: cd server && npm ci
-        run: cd server && npm run test
+        run: |- 
+          cd server && npm ci
+          cd server && npm run test
