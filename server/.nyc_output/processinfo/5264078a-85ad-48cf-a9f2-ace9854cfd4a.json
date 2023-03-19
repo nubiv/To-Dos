@@ -1,0 +1,1 @@
+{"parent":null,"pid":40698,"argv":["/opt/homebrew/Cellar/node/19.6.0/bin/node","/opt/homebrew/bin/npm","test"],"execArgv":[],"cwd":"/Users/horus/dev/to-dos/server","time":1679143853198,"ppid":40690,"coverageFilename":"/Users/horus/dev/to-dos/server/.nyc_output/5264078a-85ad-48cf-a9f2-ace9854cfd4a.json","externalId":"","uuid":"5264078a-85ad-48cf-a9f2-ace9854cfd4a","files":[]}

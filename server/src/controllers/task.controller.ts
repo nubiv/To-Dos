@@ -10,7 +10,7 @@ export const createTask: RequestHandler = async (req, res, next) => {
     });
     return;
   }
-  if (!req.body.content) {
+  if (!req.body.status) {
     res.status(400).send({
       message: 'Status can not be empty.'
     });
