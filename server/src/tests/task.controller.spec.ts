@@ -11,7 +11,7 @@ const sandbox = createSandbox();
 
 let taskController = rewire('../controllers/task.controller');
 
-describe('Test /task.controller', () => {
+describe('Test Task controller', () => {
   let sampleTaskVal: any;
 
   beforeEach('beforeEach', () => {
