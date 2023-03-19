@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.0.0] - 2023-03-10
+
+### Added
+- Refine user management page, add popup dialog to display user history of usage [`370373a`](https://github.com/horus2121/To-Dos/commit/370373abdf7d58b36c15d5bea917e50455a90844)
+- Add navigation bar, cleanup some unnecessary buttons [`3cd5c1c`](https://github.com/horus2121/To-Dos/commit/3cd5c1caf310b4353733198d1b5f8074ba175858)
+- Restructure to-do-list component, create reusable task-display-card and task-display-tile components to make to-do-list component cleaner [`4b0caa8`](https://github.com/horus2121/To-Dos/commit/4b0caa863a9ab1db98261fcc50b65c8836d74382)
+
+
 ## [1.0.0] - 2023-03-08
 
 ### Added
